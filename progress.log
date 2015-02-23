@@ -1,1 +1,21 @@
 [2015-02-20 15:46:03] START
+[2015-02-23 14:23:07] EDIT StockTrader/views/default/index.html: -24
+[2015-02-23 14:27:02] EDIT StockTrader/controllers/default.py: 86
+[2015-02-23 14:32:04] EDIT StockTrader/controllers/default.py: -86
+[2015-02-23 14:32:05] EDIT StockTrader/views/default/index.html: 0
+[2015-02-23 14:36:16] CREATE tables.py: 0
+[2015-02-23 14:36:41] EDIT StockTrader/controllers/default.py: 86
+[2015-02-23 14:37:12] EDIT StockTrader/models/tables.py: 38
+[2015-02-23 14:37:20] EDIT StockTrader/controllers/default.py: 0
+[2015-02-23 14:41:03] EDIT StockTrader/controllers/default.py: 0
+[2015-02-23 14:42:23] EDIT StockTrader/models/tables.py: 0
+[2015-02-23 14:42:51] EDIT StockTrader/views/default/index.html: 0
+[2015-02-23 14:43:12] EDIT StockTrader/models/tables.py: 0
+[2015-02-23 14:44:07] EDIT StockTrader/controllers/default.py: -2
+[2015-02-23 14:44:19] EDIT StockTrader/controllers/default.py: 0
+[2015-02-23 14:44:28] EDIT StockTrader/controllers/default.py: 0
+[2015-02-23 14:44:46] EDIT StockTrader/controllers/default.py: 0
+[2015-02-23 14:44:50] EDIT StockTrader/controllers/default.py: 0
+[2015-02-23 14:44:53] EDIT StockTrader/controllers/default.py: 0
+[2015-02-23 14:56:12] EDIT StockTrader/controllers/default.py: 0
+[2015-02-23 14:56:42] EDIT StockTrader/controllers/default.py: 0

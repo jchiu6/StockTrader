@@ -53,3 +53,35 @@ CREATE TABLE auth_cas(
     renew CHAR(1)
 );
 success!
+timestamp: 2015-02-23T14:37:15.644676
+CREATE TABLE bboard(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    phone CHAR(512),
+    email CHAR(512),
+    category CHAR(512),
+    date_posted TIMESTAMP,
+    title CHAR(512),
+    price CHAR(512),
+    sold CHAR(1),
+    bbmessage TEXT,
+    image CHAR(512)
+);
+success!
+timestamp: 2015-02-23T14:42:25.370042
+CREATE TABLE stocktrader(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    phone CHAR(512),
+    email CHAR(512),
+    category CHAR(512),
+    date_posted TIMESTAMP,
+    title CHAR(512),
+    price CHAR(512),
+    sold CHAR(1),
+    bbmessage TEXT,
+    image CHAR(512)
+);
+success!
