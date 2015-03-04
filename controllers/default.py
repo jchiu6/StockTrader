@@ -8,8 +8,6 @@
 ## - download is for downloading files uploaded in the db (does streaming)
 ## - api is an example of Hypermedia API support and access control
 #########################################################################
-def index2():
-    return dict()
 def index():
     """Better index."""
     # Let's get all data. 
