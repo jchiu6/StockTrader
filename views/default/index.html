@@ -1,11 +1,51 @@
-{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
-{{extend 'layout.html'}}
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
+	<title>Flot: Attractive JavaScript plotting for jQuery</title>
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"></link>
+	<link rel="alternate" type="application/atom+xml" title="Flot Blog" href="/blog/feed.xml"></link>
+	<link rel="stylesheet" href="/css/flot.css" type="text/css"></link>
+	
+		<link rel="stylesheet" href="/css/demo.css" type="text/css"></link>
+	
+	<script type="text/javascript" src="//use.typekit.net/kay0rxs.js"></script>
+	
+		<script src="/javascript/jquery.min.js" type="text/javascript"></script>
+		<script src="/javascript/flashcanvas/flashcanvas.js" type="text/javascript"></script>
+		<script src="/javascript/jquery.flot.min.js" type="text/javascript"></script>
+		<script src="/javascript/flot.demo.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	<script type="text/javascript">
 
-<h1>Welcome to the Buy / Sell Website!</h1>
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-34240160-1']);
+		_gaq.push(['_trackPageview']);
 
-{{=form}}
-{{=button}}
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
 
-<p>
-{{=A('Add a post', _class='btn', _href=URL('default', 'add'))}}
-</p>
+	</script>
+</head>
+
+<!--[if IE 6]><body class="ie ie6"><![endif]-->
+<!--[if IE 7]><body class="ie ie7"><![endif]-->
+<!--[if IE 8]><body class="ie ie8"><![endif]-->
+<!--[if IE 9]><body class="ie ie9"><![endif]-->
+<!--[if gt IE 9]><body class="ie"><![endif]-->
+<!--[if !IE ]><!--><body><!--<![endif]-->
+
+	<div class="header-bar">
+		<a href="/" class="title"><img src="/images/header.png" width="102" height="45" border="0"></img></a>
+		<div class="menu">
+			<a href="http://github.com/flot/flot/blob/master/API.md" class="menu-item">Documentation</a>
+			<a href="http://www.flotcharts.org/flot/examples" class="menu-item">Examples</a>
+			<a href="http://www.flotcharts.org/plugins" class="menu-item">Plugins</a>
+			<a href="/blog" class="menu-item">Blog</a>
+			<a href="http://groups.google.com/group/flot-graphs" class="menu-item">Forum</a>
+</body>
+</html>
