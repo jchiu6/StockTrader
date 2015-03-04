@@ -1,11 +1,138 @@
 {{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
 {{extend 'layout.html'}}
 
-<h1>Welcome to the Buy / Sell Website!</h1>
 
-{{=form}}
-{{=button}}
 
+<head>
+<style>
+#header {
+    background-color:black;
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+#column1 {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:300px;
+    width:250px;
+    float:left;
+    padding:5px;	      
+}
+#column2 {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:300px;
+    width:250px;
+    float:left;
+    padding:5px;		 	 
+}
+#column3 {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:300px;
+    width:250px;
+    float:left;
+    padding:5px;		 	 
+}
+#column4 {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:300px;
+    width:250px;
+    float:left;
+    padding:5px;		 	 
+}
+#columnblank {
+    line-height:30px;
+    background-color:white;
+    height:300px;
+    width:25px;
+    float:left;
+    padding:5px;	      
+}
+#bottom1 {
+    background-color:black;
+    color:white;
+    clear:both;
+    height:150px;
+    width:555px;
+    text-align:center;
+    float:left;
+    padding:5px;	 	 
+}
+#bottomblank {
+    line-height:30px;
+    background-color:white;
+    height:150px;
+    width:5px;
+    float:left;
+    padding:5px;	      
+}  
+#bottom2 {
+    background-color:black;
+    color:white;
+    height:150px;
+    width:555px;
+    text-align:center;
+    float:left;
+    padding:5px;	 	 
+}
+</style>
+</head>
+
+<div id="column1">
+<h1>Stock 1</h1>
+<h2>graph here</h2>
 <p>
-{{=A('Add a post', _class='btn', _href=URL('default', 'add'))}}
+{{=A('Buy', _class='btn', _href=URL('default', 'add'))}}
+{{=A('Sell', _class='btn', _href=URL('default', 'add'))}}
 </p>
+</div>
+
+<div id="columnblank">
+</div>
+
+<div id="column2">
+<h1>Stock 2</h1>
+<h2>graph here</h2>
+<p>
+{{=A('Buy', _class='btn', _href=URL('default', 'add'))}}
+{{=A('Sell', _class='btn', _href=URL('default', 'add'))}}
+</p>
+</div>
+
+<div id="columnblank">
+</div>
+
+<div id="column3">
+<h1>Stock 3</h1>
+<h2>graph here</h2>
+<p>
+{{=A('Buy', _class='btn', _href=URL('default', 'add'))}}
+{{=A('Sell', _class='btn', _href=URL('default', 'add'))}}
+</p>
+</div>
+
+<div id="columnblank">
+</div>
+
+<div id="column4">
+<h1>Stock 4</h1>
+<h2>graph here</h2>
+<p>
+{{=A('Buy', _class='btn', _href=URL('default', 'add'))}}
+{{=A('Sell', _class='btn', _href=URL('default', 'add'))}}
+</p>
+</div>
+
+<div id="bottom1">
+<h1>Player</h1>
+</div>
+
+<div id="bottomblank">
+</div>
+
+<div id="bottom2">
+<h1>Opponent</h1>
+</div>
