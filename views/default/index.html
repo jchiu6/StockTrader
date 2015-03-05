@@ -3,7 +3,6 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Flot Examples: Real-time updates</title>
 	<link href="static/css/examples.css" rel="stylesheet" type="text/css">
 	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="../../excanvas.min.js"></script><![endif]-->
 	<script language="javascript" type="text/javascript" src="jquery.js"></script>
@@ -65,7 +64,7 @@
 			}
 		});
 
-		var plot = $.plot("#placeholder", [ getRandomData() ], {
+		var plot1 = $.plot("#placeholder1", [ getRandomData() ], {
 			series: {
 				shadowSize: 0	// Drawing is faster without shadows
 			},
@@ -119,14 +118,14 @@
 
 		function update() {
 
-			plot.setData([getRandomData()]);
+			plot1.setData([getRandomData()]);
             plot2.setData([getRandomData()]);
             plot3.setData([getRandomData()]);
             plot4.setData([getRandomData()]);
 
 			// Since the axes don't change, we don't need to call plot.setupGrid()
 
-			plot.draw();
+			plot1.draw();
             plot2.draw();
             plot3.draw();
             plot4.draw();
@@ -148,13 +147,15 @@
 #header {
     background-color:black;
     color:white;
+    width: 100%;
+    min-width:1100px:
     text-align:center;
-    padding:5px;
+    
 }
 #column1 {
     line-height:30px;
     background-color:#eeeeee;
-    height:500px;
+    height:450px;
     width:250px;
     float:left;
     padding:5px;
@@ -162,7 +163,7 @@
 #column2 {
     line-height:30px;
     background-color:#eeeeee;
-    height:500px;
+    height:450px;
     width:250px;
     float:left;
     padding:5px;
@@ -170,7 +171,7 @@
 #column3 {
     line-height:30px;
     background-color:#eeeeee;
-    height:500px;
+    height:450px;
     width:250px;
     float:left;
     padding:5px;
@@ -178,7 +179,7 @@
 #column4 {
     line-height:30px;
     background-color:#eeeeee;
-    height:500px;
+    height:450px;
     width:250px;
     float:left;
     padding:5px;
@@ -257,77 +258,69 @@
 
 <div id="column1">
 <h1>Stock 1</h1>
-    	<div id="content">
-
+    <div id="content">
 		<div class="demo-container">
-			<div id="placeholder" class="demo-placeholder"></div>
+			<div id="placeholder1" class="demo-placeholder"></div>
 		</div>
-            </div>
+    </div>
 
-<p>
-{{=A('Buy', _class='btn', _href=URL('default', 'add'))}}
-{{=A('Sell', _class='btn', _href=URL('default', 'add'))}}
-</p>
+    <p>
+    {{=A('Buy', _class='btn', _href=URL('default', 'add'))}}
+    {{=A('Sell', _class='btn', _href=URL('default', 'add'))}}
+    </p>
 </div>
 
-<div id="columnblank">
-</div>
+<div id="columnblank"></div>
 
 <div id="column2">
 <h1>Stock 2</h1>
-    	<div id="content">
-
+    <div id="content">
 		<div class="demo-container">
 			<div id="placeholder2" class="demo-placeholder"></div>
 		</div>
-            </div>
-<p>
-{{=A('Buy', _class='btn', _href=URL('default', 'add'))}}
-{{=A('Sell', _class='btn', _href=URL('default', 'add'))}}
-</p>
+    </div>
+    <p>
+    {{=A('Buy', _class='btn', _href=URL('default', 'add'))}}
+    {{=A('Sell', _class='btn', _href=URL('default', 'add'))}}
+    </p>
 </div>
 
-<div id="columnblank">
-</div>
+<div id="columnblank"></div>
 
 <div id="column3">
 <h1>Stock 3</h1>
-    	<div id="content">
-
+    <div id="content">
 		<div class="demo-container">
 			<div id="placeholder3" class="demo-placeholder"></div>
 		</div>
-            </div>
-<p>
-{{=A('Buy', _class='btn', _href=URL('default', 'add'))}}
-{{=A('Sell', _class='btn', _href=URL('default', 'add'))}}
-</p>
+    </div>
+    <p>
+    {{=A('Buy', _class='btn', _href=URL('default', 'add'))}}
+    {{=A('Sell', _class='btn', _href=URL('default', 'add'))}}
+    </p>
 </div>
 
-<div id="columnblank">
-</div>
+<div id="columnblank"></div>
 
 <div id="column4">
 <h1>Stock 4</h1>
-    	<div id="content">
-
+    <div id="content">
 		<div class="demo-container">
 			<div id="placeholder4" class="demo-placeholder"></div>
 		</div>
-            </div>
-<p>
-{{=A('Buy', _class='btn', _href=URL('default', 'add'))}}
-{{=A('Sell', _class='btn', _href=URL('default', 'add'))}}
-</p>
+    </div>
+    <p>
+    {{=A('Buy', _class='btn', _href=URL('default', 'add'))}}
+    {{=A('Sell', _class='btn', _href=URL('default', 'add'))}}
+    </p>
 </div>
 
 <div id="bottom1">
-<h1>Player</h1>
+    <h1>Player</h1>
 </div>
 
-<div id="bottomblank">
-</div>
+<div id="bottomblank"></div>
 
 <div id="bottom2">
-<h1>Opponent</h1>
+    <h1>Opponent</h1>
 </div>
