@@ -8,7 +8,61 @@
 ## - download is for downloading files uploaded in the db (does streaming)
 ## - api is an example of Hypermedia API support and access control
 #########################################################################
+import random
 def index():
+    '''
+    		var data = [],
+			totalPoints = 300;
+    		function getRandomData() {
+
+			if (data.length > 0)
+				data = data.slice(1);
+
+			// Do a random walk
+
+			while (data.length < totalPoints) {
+
+				var prev = data.length > 0 ? data[data.length - 1] : 50,
+					y = prev + Math.random() * 10 - 5;
+
+				if (y < 0) {
+					y = 0;
+				} else if (y > 100) {
+					y = 100;
+				}
+
+				data.push(y);
+			}
+
+			// Zip the generated y values with the x values
+
+			var res = [];
+			for (var i = 0; i < data.length; ++i) {
+				res.push([i, data[i]])
+			}
+
+			return res;
+		}
+        '''
+    data = []
+    totalPoints = 300
+    def getRandomData():
+        if len(data) > 0:
+            data = data[1]
+        
+        while len(data) < totalPoints:
+            prev = data[len(data)-1] if len(data) > 0 else 50
+            y = prev + random.random() * 10 -5
+            if y < 0:
+                y = 0
+            elif y > 100:
+                y = 100
+            data.append(y)
+        res = []
+        for i in range (0,len(data) ):
+             res.append(i,data[i])
+        return res
+
     """Better index."""
     # Let's get all data. 
     #posts = db().select(db.stocktrader.ALL)
