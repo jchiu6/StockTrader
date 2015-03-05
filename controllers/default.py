@@ -13,6 +13,9 @@ data = []
 totalPoints = 300
 
 import random
+import time
+import threading
+
 def index():
     '''
     		var data = [],
@@ -65,9 +68,15 @@ def index():
         for i in range (0,len(data) ):
              res.append((i,data[i]))
         return res
-    values = getRandomData
-    
-    db.stock.insert(price=values)
+    values = 0.0
+    def test():
+        threading.Timer(5.0, test).start()
+        values = getRandomData
+        db.stock.insert(price = values)
+        session.flash=T("hello test")
+    test()
+    #values = getRandomData
+    #db.stock.insert(price=values)
     """Better index."""
     # Let's get all data. 
     #posts = db().select(db.stocktrader.ALL)

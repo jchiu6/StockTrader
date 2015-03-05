@@ -59,7 +59,7 @@
 			while (data2.length < totalPoints2) {
 
 				var prev = data2.length > 0 ? data2[data2.length - 1] : 50,
-					y = prev + Math.random();
+					y = prev + Math.random()*10-5;
 
 				if (y < 0) {
 					y = 0;
@@ -96,7 +96,7 @@
 			}
 		});
 
-		var plot1 = $.plot("#placeholder1", [getRandomData2() ], {
+		var plot1 = $.plot("#placeholder1", [{{values}} ], {
 			series: {
 				shadowSize: 0	// Drawing is faster without shadows
 			},
