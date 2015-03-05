@@ -85,3 +85,10 @@ CREATE TABLE stocktrader(
     image CHAR(512)
 );
 success!
+timestamp: 2015-03-04T19:46:48.061000
+CREATE TABLE stock(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    price CHAR(512),
+    date_posted TIMESTAMP
+);
+success!

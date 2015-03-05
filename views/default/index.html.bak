@@ -8,9 +8,7 @@
 	<script language="javascript" type="text/javascript" src="jquery.js"></script>
 	<script language="javascript" type="text/javascript" src="jquery.flot.js"></script>
 	<script type="text/javascript">
-
 	$(function() {
-
 		// We use an inline data source in the example, usually data would
 		// be fetched from a server
 
@@ -47,10 +45,44 @@
 
 			return res;
 		}
+        
+        var data2 = [],
+			totalPoints2 = 300;
+
+		function getRandomData2() {
+
+			if (data2.length > 0)
+				data2 = data2.slice(1);
+
+			// Do a random walk
+
+			while (data2.length < totalPoints2) {
+
+				var prev = data2.length > 0 ? data2[data2.length - 1] : 50,
+					y = prev + Math.random();
+
+				if (y < 0) {
+					y = 0;
+				} else if (y > 100) {
+					y = 100;
+				}
+
+				data2.push(y);
+			}
+
+			// Zip the generated y values with the x values
+
+			var res = [];
+			for (var i = 0; i < data2.length; ++i) {
+				res.push([i, data2[i]])
+			}
+
+			return res;
+		}
 
 		// Set up the control widget
 
-		var updateInterval = 500; //milliseconds
+		var updateInterval = 30; //milliseconds
 		$("#updateInterval").val(updateInterval).change(function () {
 			var v = $(this).val();
 			if (v && !isNaN(+v)) {
@@ -64,7 +96,7 @@
 			}
 		});
 
-		var plot1 = $.plot("#placeholder1", [ getRandomData() ], {
+		var plot1 = $.plot("#placeholder1", [getRandomData2() ], {
 			series: {
 				shadowSize: 0	// Drawing is faster without shadows
 			},
@@ -118,7 +150,7 @@
 
 		function update() {
 
-			plot1.setData([getRandomData()]);
+			plot1.setData([getRandomData2()]);
             plot2.setData([getRandomData()]);
             plot3.setData([getRandomData()]);
             plot4.setData([getRandomData()]);
@@ -136,7 +168,7 @@
 
 		// Add the Flot version string to the footer
 
-		$("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
+		$("#footer").prepend("Stocktrader, Flot " + $.plot.version + " &ndash; ");
 	});
 
 	</script>
@@ -163,7 +195,7 @@
 #column2 {
     line-height:30px;
     background-color:#eeeeee;
-    height:400px;
+    height:450px;
     width:250px;
     float:left;
     padding:5px;
@@ -171,7 +203,7 @@
 #column3 {
     line-height:30px;
     background-color:#eeeeee;
-    height:400px;
+    height:450px;
     width:250px;
     float:left;
     padding:5px;
@@ -179,7 +211,7 @@
 #column4 {
     line-height:30px;
     background-color:#eeeeee;
-    height:400px;
+    height:450px;
     width:250px;
     float:left;
     padding:5px;
