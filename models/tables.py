@@ -26,11 +26,6 @@ db.define_table('stocktrader',
                 format = '%(title)s',
                 )
 
-db.define_table('stock',
-                Field('price'),
-                Field('date_posted', 'datetime'),
-                )
-
 db.stocktrader.id.readable = False
 db.stocktrader.bbmessage.label = 'Message'
 db.stocktrader.name.default = get_first_name()
@@ -48,5 +43,3 @@ db.stocktrader.phone.requires = IS_MATCH('^1?((-)\d{3}-?|\(\d{3}\))\d{3}-?\d{4}$
 db.stocktrader.price.requires = IS_FLOAT_IN_RANGE(0, 100000.0, error_message='The price should be in the range 0..100000')
 db.stocktrader.sold.default = False
 db.stocktrader.sold.required = True
-
-db.stock.date_posted.default = datetime.utcnow()

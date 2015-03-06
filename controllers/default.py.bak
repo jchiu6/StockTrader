@@ -72,7 +72,6 @@ def index():
     def test():
         threading.Timer(5.0, test).start()
         values = getRandomData
-        db.stock.insert(price = values)
         session.flash=T("hello test")
     test()
     #values = getRandomData

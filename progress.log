@@ -297,3 +297,8 @@
 [2015-03-06 14:50:21] EDIT StockTrader/static/css/examples.css: 0
 [2015-03-06 14:50:30] EDIT StockTrader/static/css/examples.css: 0
 [2015-03-06 14:51:54] EDIT StockTrader/static/css/examples.css: 0
+[2015-03-06 15:07:38] EDIT StockTrader/models/tables.py: -5
+[2015-03-06 15:08:16] EDIT StockTrader/controllers/default.py: -1
+[2015-03-06 15:08:20] EDIT StockTrader/controllers/default.py: 0
+[2015-03-06 15:08:31] EDIT StockTrader/controllers/default.py: 0
+[2015-03-06 15:08:33] EDIT StockTrader/models/tables.py: 0
