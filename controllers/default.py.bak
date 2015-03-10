@@ -11,70 +11,48 @@
 
 data = []
 totalPoints = 300
+values = []
 
+import datetime
+import logging
 import random
 import time
 import threading
+#import numpy as np
+#from matplotlib import pyplot as plt
+#from matplotlib import animation
+def getRandomDataPy():
+    global data
+    global values
+    if len(data) > 0:
+        data = data[1:1]
+    while len(data) < totalPoints:
+        prev = data[len(data)-1] if len(data) > 0 else 50
+        y = prev + random.random() * 10 -5
+        if y < 0:
+            y = 0
+        elif y > 100:
+            y = 100
+        data.append(y)
+    res = []
+    for i in range (0,len(data) ):
+         res.append((i,data[i]))
+    return res
+    
+def test():
+    global values
+    print datetime.datetime.now()
+    values = getRandomDataPy()
+    #print("values outside:", values)
+    #print("values:",values)
+    threading.Timer(1.0, test).start()
+    return dict(values = values)
 
 def index():
-    '''
-    		var data = [],
-			totalPoints = 300;
-    		function getRandomData() {
-
-			if (data.length > 0)
-				data = data.slice(1);
-
-			// Do a random walk
-
-			while (data.length < totalPoints) {
-
-				var prev = data.length > 0 ? data[data.length - 1] : 50,
-					y = prev + Math.random() * 10 - 5;
-
-				if (y < 0) {
-					y = 0;
-				} else if (y > 100) {
-					y = 100;
-				}
-
-				data.push(y);
-			}
-
-			// Zip the generated y values with the x values
-
-			var res = [];
-			for (var i = 0; i < data.length; ++i) {
-				res.push([i, data[i]])
-			}
-
-			return res;
-		}
-        '''
-
-    def getRandomData():
-        global data
-        if len(data) > 0:
-            data = data[1]
-        while len(data) < totalPoints:
-            prev = data[len(data)-1] if len(data) > 0 else 50
-            y = prev + random.random() * 10 -5
-            if y < 0:
-                y = 0
-            elif y > 100:
-                y = 100
-            data.append(y)
-        res = []
-        for i in range (0,len(data) ):
-             res.append((i,data[i]))
-        return res
-    values = 0.0
-    def test():
-        threading.Timer(5.0, test).start()
-        values = getRandomData
-        session.flash=T("hello test")
+    print("hello console")
     test()
-    #values = getRandomData
+    #values = getRandomDataPy()
+    print("values outside:",values)
     #db.stock.insert(price=values)
     """Better index."""
     # Let's get all data. 
@@ -138,7 +116,7 @@ def index():
         links=links,
         paginate=5,
         )
-    return dict(form=form, button=button, values=values)
+    return dict(form=form, button=button, values = values)
 
 #@auth.requires_login()
 def add():

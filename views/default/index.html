@@ -11,78 +11,65 @@
 	$(function() {
 		// We use an inline data source in the example, usually data would
 		// be fetched from a server
-
 		var data = [],
 			totalPoints = 300;
 
 		function getRandomData() {
-
 			if (data.length > 0)
 				data = data.slice(1);
-
 			// Do a random walk
-
 			while (data.length < totalPoints) {
-
 				var prev = data.length > 0 ? data[data.length - 1] : 50,
 					y = prev + Math.random() * 10 - 5;
-
 				if (y < 0) {
 					y = 0;
 				} else if (y > 100) {
 					y = 100;
 				}
-
 				data.push(y);
 			}
-
 			// Zip the generated y values with the x values
-
 			var res = [];
 			for (var i = 0; i < data.length; ++i) {
 				res.push([i, data[i]])
 			}
-
 			return res;
 		}
-        
-        var data2 = [],
-			totalPoints2 = 300;
-
-		function getRandomData2() {
-
-			if (data2.length > 0)
-				data2 = data2.slice(1);
-
-			// Do a random walk
-
-			while (data2.length < totalPoints2) {
-
-				var prev = data2.length > 0 ? data2[data2.length - 1] : 50,
-					y = prev + Math.random()*10-5;
-
-				if (y < 0) {
-					y = 0;
-				} else if (y > 100) {
-					y = 100;
-				}
-
-				data2.push(y);
-			}
-
-			// Zip the generated y values with the x values
-
-			var res = [];
-			for (var i = 0; i < data2.length; ++i) {
-				res.push([i, data2[i]])
-			}
-
-			return res;
-		}
-
 		// Set up the control widget
-
-		var updateInterval = 30; //milliseconds
+        //var test1 = getRandomData();
+        //var test2 = {{=values}};
+        var dataPy = [];
+            dataPy = {{=values}};
+        function pushX() {
+            if (dataPy.length > 0)
+                dataPy = dataPy.slice(1);
+            var res = [];
+//             var myVar = setInterval(function (){getValues() }, 1000);
+//             function getValues(){
+//             var d = {{=values}};
+//             return d;
+//             }
+            for (var i = 0; i < dataPy.length; ++i) {
+                res.push([i, dataPy[i]])
+            }
+            return res;
+        }
+        var test3 = pushX();
+        console.log("outside update:",test3);
+        //console.log(test1);
+        //console.log(test2);
+		var updateInterval = 1000; //milliseconds
+        /*setInterval(function() {
+            $.get(data_url, function(data) {
+                x = data['val'];
+                push x to the end of array;
+                display array;
+            });
+            
+            
+        }, updateInterval);
+        */
+        
 		$("#updateInterval").val(updateInterval).change(function () {
 			var v = $(this).val();
 			if (v && !isNaN(+v)) {
@@ -96,7 +83,7 @@
 			}
 		});
 
-		var plot1 = $.plot("#placeholder1", [{{values}} ], {
+		var plot1 = $.plot("#placeholder1", [pushX()] , {
 			series: {
 				shadowSize: 0	// Drawing is faster without shadows
 			},
@@ -105,7 +92,7 @@
 				max: 100
 			},
 			xaxis: {
-				show: false
+                show: false
 			}
 		});
         
@@ -147,10 +134,14 @@
 				show: false
 			}
 		});
-
+        
 		function update() {
-
-			plot1.setData([getRandomData2()]);
+//             need to update {{=values}} call here
+            var test4 = pushX();
+//             console.log("inside update",test4);
+            var test5 = getRandomData();
+            console.log("inside update test5",test5);
+			plot1.setData([pushX()]);
             plot2.setData([getRandomData()]);
             plot3.setData([getRandomData()]);
             plot4.setData([getRandomData()]);
