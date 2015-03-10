@@ -18,6 +18,11 @@ import logging
 import random
 import time
 import threading
+from socket import *
+import json
+import os
+
+
 #import numpy as np
 #from matplotlib import pyplot as plt
 #from matplotlib import animation
@@ -39,21 +44,19 @@ def getRandomDataPy():
     for i in range (0,len(data) ):
          res.append((i,data[i]))
     return res
-    
-def test():
+start_date = "09.03.2015"
+
+def threadingValue():
     global values
     print datetime.datetime.now()
     values = getRandomDataPy()
-    #print("values outside:", values)
-    #print("values:",values)
-    threading.Timer(1.0, test).start()
-    return dict(values = values)
+    result = {"startdate": start_date}
+    print json.dumps(result)
+    threading.Timer(1.0, threadingValue).start()
 
 def index():
     print("hello console")
-    test()
     #values = getRandomDataPy()
-    print("values outside:",values)
     #db.stock.insert(price=values)
     """Better index."""
     # Let's get all data. 
@@ -117,7 +120,9 @@ def index():
         links=links,
         paginate=5,
         )
-    return dict(form=form, button=button, values = values)
+    threadingValue()
+    print("values outside:",values)
+    return dict(form = form, button = button, values = values)
 
 #@auth.requires_login()
 def add():
