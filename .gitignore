@@ -2,3 +2,11 @@ $ git rm -f db/*.sqlite3
 $ echo '*.sqlite3' >> .gitignore
 $ git add .gitignore
 $ git commit -m "ignored sqlite databases"
+
+progress.log
+cache/*
+databases/*
+errors/*
+sessions/*
+*.pyc
+*.bak
