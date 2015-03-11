@@ -5,7 +5,6 @@ $ git commit -m "ignored sqlite databases"
 
 progress.log
 cache/*
-databases/*
 errors/*
 sessions/*
 *.pyc
