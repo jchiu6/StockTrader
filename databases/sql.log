@@ -92,3 +92,14 @@ CREATE TABLE stock(
     date_posted TIMESTAMP
 );
 success!
+timestamp: 2015-03-10T16:30:58.644000
+CREATE TABLE stocks(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    price CHAR(512),
+    date_posted TIMESTAMP
+);
+success!
+timestamp: 2015-03-10T17:53:55.386000
+ALTER TABLE stocks ADD time_posted TIMESTAMP;
+success!

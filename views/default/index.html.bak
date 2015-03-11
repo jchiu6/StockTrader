@@ -3,17 +3,21 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link href="static/css/examples.css" rel="stylesheet" type="text/css">
+<!--	<link href="examples.css" rel="stylesheet" type="text/css">-->
 	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="../../excanvas.min.js"></script><![endif]-->
-	<script language="javascript" type="text/javascript" src="jquery.js"></script>
-	<script language="javascript" type="text/javascript" src="jquery.flot.js"></script>
+<!--	<script language="javascript" type="text/javascript" src="jquery.js"></script>
+	<script language="javascript" type="text/javascript" src="jquery.flot.js"></script>-->
 	<script type="text/javascript">
+        
 	$(function() {
 		// We use an inline data source in the example, usually data would
 		// be fetched from a server
 		var data = [],
-			totalPoints = 300;
+			totalPoints = 100;
+        var updateInterval = 1000; //milliseconds
+        var now = new Date().getTime();
 		function getRandomData() {
+            data.shift();
 			if (data.length > 0)
 				data = data.slice(1);
 			// Do a random walk
@@ -25,23 +29,45 @@
 				} else if (y > 100) {
 					y = 100;
 				}
-				data.push(y);
+                var temp = [now += updateInterval, y]
+				data.push(temp);
 			}
 			// Zip the generated y values with the x values
-			var res = [];
-			for (var i = 0; i < data.length; ++i) {
-				res.push([i, data[i]])
-			}
-			return res;
+// 			var res = [];
+// 			for (var i = 0; i < data.length; ++i) {
+// 				res.push([i, data[i]])
+// 			}
+			return data;
 		}
 		// Set up the control widget
         //var test1 = getRandomData();
         //var test2 = {{=values}};
+//         $.ajax({
+//             type: 'get',
+//             url "
+//         $.getJSON('', {
+//             $(form).serialize()
+//         }).success(data, status) {
+//             var response = JSON.parse(data);
+//             console.log("this is the response:", response);
+//         });
+        
         var dataPy = [];
-            dataPy = {{=values}};
+              dataPy = {{=values}};
         function pushX() {
             if (dataPy.length > 0)
                 dataPy = dataPy.slice(1);
+//             dataPy.push(50);
+            $(function() {
+                $.ajax({
+                type: 'GET',
+                url: '/StockTrader/default/index2.json',
+                success: function(data) {
+//                     console.log('success', data.y);
+                     dataPy.push(data.y);
+                }
+            });
+            });
             var res = [];
 //             var myVar = setInterval(function (){getValues() }, 1000);
 //             function getValues(){
@@ -49,17 +75,17 @@
 //             return d;
 //             }
             for (var i = 0; i < dataPy.length; ++i) {
-                res.push([i, dataPy[i]])
+                res.push([[i], dataPy[i]])
             }
+//             while(dataPy.length < totalPoints){
+//                 var temp = [now += updateInterval, dataPy];
+//                 res.push(temp);
+//             }
             return res;
         }
-       
-       
-        var test3 = pushX();
-        console.log("outside update:",test3);
         //console.log(test1);
         //console.log(test2);
-		var updateInterval = 1000; //milliseconds
+		
         /*setInterval(function() {
             $.get(data_url, function(data) {
                 x = data['val'];
@@ -70,10 +96,10 @@
             
         }, updateInterval);
         */
-        var jqxhr = $.get("values", function (data) {
-            $(".result").html(data);
-            alert("Load was performed.");
-        });
+//         var jqxhr = $.get("values", function (data) {
+//             $(".result").html(data);
+//             alert("Load was performed.");
+//         });
 
 		$("#updateInterval").val(updateInterval).change(function () {
 			var v = $(this).val();
@@ -97,20 +123,63 @@
 				max: 100
 			},
 			xaxis: {
-                show: false
-			}
+                    mode: "time",
+                    tickSize: [2, "second"],
+                    tickFormatter: function (v, axis) {
+                        var date = new Date(v);
+
+                        if (date.getSeconds() % 20 == 0) {
+                            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                            return hours + ":" + minutes + ":" + seconds;
+                        } else {
+                            return "";
+                        }
+                    },
+                axisLabel: "Time",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: 'Verdana, Arial',
+                axisLabelPadding: 10
+            }
 		});
-        
+
         var plot2 = $.plot("#placeholder2", [ getRandomData() ], {
 			series: {
-				shadowSize: 0	// Drawing is faster without shadows
+				shadowSize: 0,	// Drawing is faster without shadows
+                            lines: {
+                show: true,
+                lineWidth: 1.2,
+                fill: true
+            }
 			},
 			yaxis: {
 				min: 0,
 				max: 100
 			},
 			xaxis: {
-				show: false
+				mode: "time",
+                    tickSize: [25, "second"],
+                    tickFormatter: function (v, axis) {
+                        var date = new Date(v);
+
+                        if (date.getSeconds() % 100 == 0) {
+                            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                            return hours + ":" + minutes + ":" + seconds;
+                        } else {
+                            return "";
+                        }
+                    },
+                axisLabel: "Time",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: 'Verdana, Arial',
+                axisLabelPadding: 10
 			}
 		});
         
@@ -141,11 +210,6 @@
 		});
         
 		function update() {
-//             need to update {{=values}} call here
-            var test4 = pushX();
-//             console.log("inside update",test4);
-            var test5 = getRandomData();
-//             console.log("inside update test5",test5);
 			plot1.setData([pushX()]);
             plot2.setData([getRandomData()]);
             plot3.setData([getRandomData()]);

@@ -9,32 +9,32 @@
 ## - api is an example of Hypermedia API support and access control
 #########################################################################
 
-data = []
-totalPoints = 300
-values = []
-
 import datetime
 import logging
 import random
 import time
+from time import gmtime, strftime
 import threading
 from socket import *
 import json
 import os
 
+data = []
+totalPoints = 50
+values = []
+prev = 0
 
-#import numpy as np
-#from matplotlib import pyplot as plt
-#from matplotlib import animation
 def getRandomDataPy():
     global data
     global values
     global totalPoints
+    global prev
     if len(data) > 0:
         data = data[1:1]
     while len(data) < totalPoints:
         prev = data[len(data)-1] if len(data) > 0 else 50
-        y = prev + random.random() * 10 -5
+        #y = prev + random.random() * 10 -5
+        y=0
         if y < 0:
             y = 0
         elif y > 100:
@@ -44,18 +44,16 @@ def getRandomDataPy():
     for i in range (0,len(data) ):
          res.append((i,data[i]))
     return res
-start_date = "09.03.2015"
 
 def threadingValue():
     global values
-    print datetime.datetime.now()
+    global prev
     values = getRandomDataPy()
-    result = {"startdate": start_date}
-    print json.dumps(result)
-    threading.Timer(1.0, threadingValue).start()
+    #threading.Timer(1.0, threadingValue).start()
 
 def index():
-    print("hello console")
+    global prev
+    #print("hello console")
     #values = getRandomDataPy()
     #db.stock.insert(price=values)
     """Better index."""
@@ -121,8 +119,25 @@ def index():
         paginate=5,
         )
     threadingValue()
-    print("values outside:",values)
-    return dict(form = form, button = button, values = values)
+    return dict(form = form, button = button, values = values, prev = prev)
+
+def index2():
+    global data
+    prevdb = db(db.stocks).select(orderby=~db.stocks.id).first()
+    if prevdb is None:
+        prev = 50
+    else:
+        prev = prevdb.price
+        #print("index 2 prevdb.price",prevdb.price)
+
+    y = float(prev) + random.random() * 10 -5
+    if y < 0:
+        y = 0
+    elif y > 100:
+        y = 100
+    db.stocks.insert(name = "A", price = y)
+    z = strftime("%H:%M:%S", gmtime() )
+    return dict(y=y, z=z)
 
 #@auth.requires_login()
 def add():
@@ -210,8 +225,6 @@ def call():
     """
     return service()
 
-
-@auth.requires_login() 
 def api():
     """
     this is example of API with access control
