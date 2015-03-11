@@ -8,47 +8,34 @@ def get_first_name():
         name = auth.user.first_name
     return name
 
-CATEGORY = ['Car', 'Bike', 'Books', 'Music', 'Outdoors', 'For the House', 'Misc']
-
-
-db.define_table('stocktrader',
+db.define_table('stocktrader2',
                 Field('name'),
                 Field('user_id', db.auth_user),
-                Field('phone'),
                 Field('email'),
-                Field('category'),
                 Field('date_posted', 'datetime'),
-                Field('title'),
-                Field('price'),
+                Field('money'),
+                Field('stocks_owned'),
                 Field('sold', 'boolean'),
-                Field('bbmessage', 'text'),
                 Field('image', 'upload', default=''),
                 format = '%(title)s',
                 )
 
-db.define_table('stocks',
+db.stocktrader2.id.readable = False
+db.stocktrader2.name.default = get_first_name()
+db.stocktrader2.name.writable = False
+db.stocktrader2.user_id.default = auth.user_id
+db.stocktrader2.user_id.writable = db.stocktrader2.user_id.readable = False
+db.stocktrader2.email.requires = IS_EMAIL()
+db.stocktrader2.date_posted.default = datetime.utcnow()
+db.stocktrader2.date_posted.writable = False
+#db.stocktrader.money.requires = IS_FLOAT_IN_RANGE(0, 100000.0, error_message='The price should be in the range 0..100000')
+db.stocktrader2.money.default = 10000
+db.stocktrader2.sold.default = False
+db.stocktrader2.sold.required = True
+
+db.define_table('stocks2',
                 Field('name'),
                 Field('price'),
                 Field('date_posted', 'datetime'),
-                Field('time_posted', 'datetime'),
                 )
-
-db.stocktrader.id.readable = False
-db.stocktrader.bbmessage.label = 'Message'
-db.stocktrader.name.default = get_first_name()
-db.stocktrader.date_posted.default = datetime.utcnow()
-db.stocktrader.name.writable = False
-db.stocktrader.date_posted.writable = False
-db.stocktrader.user_id.default = auth.user_id
-db.stocktrader.user_id.writable = db.stocktrader.user_id.readable = False
-db.stocktrader.email.requires = IS_EMAIL()
-db.stocktrader.category.requires = IS_IN_SET(CATEGORY, zero = None)
-db.stocktrader.category.default = 'Misc'
-db.stocktrader.category.required = True
-db.stocktrader.phone.requires = IS_MATCH('^1?((-)\d{3}-?|\(\d{3}\))\d{3}-?\d{4}$',
-         error_message='not a phone number')
-db.stocktrader.price.requires = IS_FLOAT_IN_RANGE(0, 100000.0, error_message='The price should be in the range 0..100000')
-db.stocktrader.sold.default = False
-db.stocktrader.sold.required = True
-
-db.stocks.date_posted.default = datetime.utcnow()
+db.stocks2.date_posted.default = datetime.utcnow()

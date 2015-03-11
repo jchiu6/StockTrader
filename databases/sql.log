@@ -103,3 +103,675 @@ success!
 timestamp: 2015-03-10T17:53:55.386000
 ALTER TABLE stocks ADD time_posted TIMESTAMP;
 success!
+timestamp: 2015-03-10T22:19:14.349000
+CREATE TABLE stocks2(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    price CHAR(512),
+    date_posted TIMESTAMP,
+    time_posted TIMESTAMP
+);
+success!
+timestamp: 2015-03-10T22:23:40.998000
+CREATE TABLE stocks(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    price CHAR(512),
+    date_posted TIMESTAMP,
+    time_posted TIMESTAMP
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2015-03-10T23:49:11.966000
+CREATE TABLE stocks(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    price CHAR(512),
+    date_posted TIMESTAMP
+);
+timestamp: 2015-03-10T23:49:16.004000
+CREATE TABLE stocks(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    price CHAR(512),
+    date_posted TIMESTAMP
+);
+timestamp: 2015-03-10T23:49:44.281000
+CREATE TABLE stocks(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    price CHAR(512),
+    date_posted TIMESTAMP
+);
+timestamp: 2015-03-10T23:50:31.226000
+CREATE TABLE stocks(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    price CHAR(512),
+    date_posted TIMESTAMP
+);
+timestamp: 2015-03-10T23:52:00.905000
+CREATE TABLE stocks(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    price CHAR(512),
+    date_posted TIMESTAMP
+);
+timestamp: 2015-03-10T23:52:40.712000
+CREATE TABLE stocks(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    price CHAR(512),
+    date_posted TIMESTAMP
+);
+timestamp: 2015-03-10T23:53:07.913000
+CREATE TABLE stocks(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    price CHAR(512),
+    date_posted TIMESTAMP
+);
+timestamp: 2015-03-11T01:16:45.959000
+ALTER TABLE stocktrader ADD money CHAR(512);
+timestamp: 2015-03-11T01:17:46.943000
+ALTER TABLE stocktrader ADD money CHAR(512);
+timestamp: 2015-03-11T01:18:46.944000
+ALTER TABLE stocktrader ADD money CHAR(512);
+timestamp: 2015-03-11T01:19:46.968000
+ALTER TABLE stocktrader ADD money CHAR(512);
+timestamp: 2015-03-11T01:20:46.945000
+ALTER TABLE stocktrader ADD money CHAR(512);
+timestamp: 2015-03-11T01:21:46.942000
+ALTER TABLE stocktrader ADD money CHAR(512);
+timestamp: 2015-03-11T01:22:46.938000
+ALTER TABLE stocktrader ADD money CHAR(512);
+timestamp: 2015-03-11T01:23:46.939000
+ALTER TABLE stocktrader ADD money CHAR(512);
+timestamp: 2015-03-11T01:24:46.964000
+ALTER TABLE stocktrader ADD money CHAR(512);
+timestamp: 2015-03-11T01:25:11.555000
+ALTER TABLE stocktrader ADD money CHAR(512);
+timestamp: 2015-03-11T01:25:29.706000
+ALTER TABLE stocktrader ADD money CHAR(512);
+timestamp: 2015-03-11T01:25:32.387000
+ALTER TABLE stocktrader ADD money CHAR(512);
+timestamp: 2015-03-11T01:26:09.048000
+CREATE TABLE stocktrader2(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    email CHAR(512),
+    date_posted TIMESTAMP,
+    money CHAR(512),
+    sold CHAR(1),
+    image CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2015-03-11T01:30:48.565000
+ALTER TABLE stocktrader2 ADD stocks_owned CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

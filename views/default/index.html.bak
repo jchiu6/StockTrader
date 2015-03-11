@@ -14,10 +14,9 @@
 		// be fetched from a server
 		var data = [],
 			totalPoints = 100;
-        var updateInterval = 1000; //milliseconds
+        var updateInterval = 5000; //milliseconds
         var now = new Date().getTime();
 		function getRandomData() {
-            data.shift();
 			if (data.length > 0)
 				data = data.slice(1);
 			// Do a random walk
@@ -30,76 +29,57 @@
 					y = 100;
 				}
                 var temp = [now += updateInterval, y]
-				data.push(temp);
+				data.push(y);
 			}
 			// Zip the generated y values with the x values
-// 			var res = [];
-// 			for (var i = 0; i < data.length; ++i) {
-// 				res.push([i, data[i]])
-// 			}
-			return data;
+			var res = [];
+			for (var i = 0; i < data.length; ++i) {
+				res.push([i, data[i]])
+			}
+			return res;
 		}
 		// Set up the control widget
-        //var test1 = getRandomData();
-        //var test2 = {{=values}};
-//         $.ajax({
-//             type: 'get',
-//             url "
-//         $.getJSON('', {
-//             $(form).serialize()
-//         }).success(data, status) {
-//             var response = JSON.parse(data);
-//             console.log("this is the response:", response);
-//         });
-        
-        var dataPy = [];
-              dataPy = {{=values}};
-        function pushX() {
-            if (dataPy.length > 0)
-                dataPy = dataPy.slice(1);
-//             dataPy.push(50);
-            $(function() {
-                $.ajax({
-                type: 'GET',
-                url: '/StockTrader/default/index2.json',
-                success: function(data) {
-//                     console.log('success', data.y);
-                     dataPy.push(data.y);
-                }
-            });
-            });
+        var dataPy1,dataPy2 = [];
+          dataPy1 = {{=values}};
+          dataPy2 = {{=values}};
+          dataPy3 = {{=values}};
+          dataPy4 = {{=values}};
+        function pushGraph1() {
+            if (dataPy1.length > 0)
+                dataPy1 = dataPy1.slice(1);
             var res = [];
-//             var myVar = setInterval(function (){getValues() }, 1000);
-//             function getValues(){
-//             var d = {{=values}};
-//             return d;
-//             }
-            for (var i = 0; i < dataPy.length; ++i) {
-                res.push([[i], dataPy[i]])
+            for (var i = 0; i < dataPy1.length; ++i) {
+                res.push([[i], dataPy1[i]])
             }
-//             while(dataPy.length < totalPoints){
-//                 var temp = [now += updateInterval, dataPy];
-//                 res.push(temp);
-//             }
             return res;
         }
-        //console.log(test1);
-        //console.log(test2);
-		
-        /*setInterval(function() {
-            $.get(data_url, function(data) {
-                x = data['val'];
-                push x to the end of array;
-                display array;
-            });
-            
-            
-        }, updateInterval);
-        */
-//         var jqxhr = $.get("values", function (data) {
-//             $(".result").html(data);
-//             alert("Load was performed.");
-//         });
+        function pushGraph2() {
+            if (dataPy2.length > 0)
+                dataPy2 = dataPy2.slice(1);
+            var res = [];
+            for (var i = 0; i < dataPy2.length; ++i) {
+                res.push([[i], dataPy2[i]])
+            }
+            return res;
+        }
+        function pushGraph3() {
+            if (dataPy3.length > 0)
+                dataPy3 = dataPy3.slice(1);
+            var res = [];
+            for (var i = 0; i < dataPy3.length; ++i) {
+                res.push([[i], dataPy3[i]])
+            }
+            return res;
+        }
+        function pushGraph4() {
+            if (dataPy4.length > 0)
+                dataPy4 = dataPy4.slice(1);
+            var res = [];
+            for (var i = 0; i < dataPy4.length; ++i) {
+                res.push([[i], dataPy4[i]])
+            }
+            return res;
+        }
 
 		$("#updateInterval").val(updateInterval).change(function () {
 			var v = $(this).val();
@@ -114,39 +94,45 @@
 			}
 		});
 
-		var plot1 = $.plot("#placeholder1", [pushX()] , {
+		var plot1 = $.plot("#placeholder1", [pushGraph1()] , {
 			series: {
-				shadowSize: 0	// Drawing is faster without shadows
+				shadowSize: 0,	// Drawing is faster without shadows
+                            lines: {
+                show: true,
+                lineWidth: 1.2,
+                fill: true
+            }	// Drawing is faster without shadows
 			},
 			yaxis: {
 				min: 0,
 				max: 100
 			},
 			xaxis: {
-                    mode: "time",
-                    tickSize: [2, "second"],
-                    tickFormatter: function (v, axis) {
-                        var date = new Date(v);
+                show: false
+//                     mode: "time",
+//                     tickSize: [2, "second"],
+//                     tickFormatter: function (v, axis) {
+//                         var date = new Date(v);
 
-                        if (date.getSeconds() % 20 == 0) {
-                            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-                            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-                            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+//                         if (date.getSeconds() % 20 == 0) {
+//                             var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+//                             var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+//                             var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 
-                            return hours + ":" + minutes + ":" + seconds;
-                        } else {
-                            return "";
-                        }
-                    },
-                axisLabel: "Time",
-                axisLabelUseCanvas: true,
-                axisLabelFontSizePixels: 12,
-                axisLabelFontFamily: 'Verdana, Arial',
-                axisLabelPadding: 10
+//                             return hours + ":" + minutes + ":" + seconds;
+//                         } else {
+//                             return "";
+//                         }
+//                     },
+//                 axisLabel: "Time",
+//                 axisLabelUseCanvas: true,
+//                 axisLabelFontSizePixels: 12,
+//                 axisLabelFontFamily: 'Verdana, Arial',
+//                 axisLabelPadding: 10
             }
 		});
 
-        var plot2 = $.plot("#placeholder2", [ getRandomData() ], {
+        var plot2 = $.plot("#placeholder2", [ pushGraph2() ], {
 			series: {
 				shadowSize: 0,	// Drawing is faster without shadows
                             lines: {
@@ -160,32 +146,38 @@
 				max: 100
 			},
 			xaxis: {
-				mode: "time",
-                    tickSize: [25, "second"],
-                    tickFormatter: function (v, axis) {
-                        var date = new Date(v);
+                show: false
+// 				mode: "time",
+//                     tickSize: [25, "second"],
+//                     tickFormatter: function (v, axis) {
+//                         var date = new Date(v);
 
-                        if (date.getSeconds() % 100 == 0) {
-                            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-                            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-                            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+//                         if (date.getSeconds() % 100 == 0) {
+//                             var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+//                             var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+//                             var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
 
-                            return hours + ":" + minutes + ":" + seconds;
-                        } else {
-                            return "";
-                        }
-                    },
-                axisLabel: "Time",
-                axisLabelUseCanvas: true,
-                axisLabelFontSizePixels: 12,
-                axisLabelFontFamily: 'Verdana, Arial',
-                axisLabelPadding: 10
+//                             return hours + ":" + minutes + ":" + seconds;
+//                         } else {
+//                             return "";
+//                         }
+//                     },
+//                 axisLabel: "Time",
+//                 axisLabelUseCanvas: true,
+//                 axisLabelFontSizePixels: 12,
+//                 axisLabelFontFamily: 'Verdana, Arial',
+//                 axisLabelPadding: 10
 			}
 		});
         
-        var plot3 = $.plot("#placeholder3", [ getRandomData() ], {
+        var plot3 = $.plot("#placeholder3", [ pushGraph3() ], {
 			series: {
-				shadowSize: 0	// Drawing is faster without shadows
+				shadowSize: 0,	// Drawing is faster without shadows
+                            lines: {
+                show: true,
+                lineWidth: 1.2,
+                fill: true
+            }	// Drawing is faster without shadows
 			},
 			yaxis: {
 				min: 0,
@@ -196,9 +188,14 @@
 			}
 		});
         
-        var plot4 = $.plot("#placeholder4", [ getRandomData() ], {
+        var plot4 = $.plot("#placeholder4", [ pushGraph4() ], {
 			series: {
-				shadowSize: 0	// Drawing is faster without shadows
+				shadowSize: 0,	// Drawing is faster without shadows
+                            lines: {
+                show: true,
+                lineWidth: 1.2,
+                fill: true
+            }	// Drawing is faster without shadows
 			},
 			yaxis: {
 				min: 0,
@@ -210,14 +207,33 @@
 		});
         
 		function update() {
-			plot1.setData([pushX()]);
-            plot2.setData([getRandomData()]);
-            plot3.setData([getRandomData()]);
-            plot4.setData([getRandomData()]);
+            $(function() {
+                $.ajax({
+                type: 'GET',
+                url: '/StockTrader/default/graphJson.json',
+                success: function(data) {
+//                     console.log('success', data.y);
+                     dataPy1.push(data.g1y);
+                     dataPy2.push(data.g2y);
+                     dataPy3.push(data.g3y);
+                     dataPy4.push(data.g4y);
+                }
+            });
+            });
+            
+
+			plot1.setData([pushGraph1()]);
+            plot2.setData([pushGraph2()]);
+            plot3.setData([pushGraph3()]);
+            plot4.setData([pushGraph4()]);
 
 			// Since the axes don't change, we don't need to call plot.setupGrid()
-
-			plot1.draw();
+            plot1.setupGrid()
+            plot2.setupGrid()
+            plot3.setupGrid()
+            plot4.setupGrid()
+			
+            plot1.draw();
             plot2.draw();
             plot3.draw();
             plot4.draw();
@@ -243,8 +259,8 @@
     </div>
 
     <p>
-    {{=A('Buy', _class='btn', _href=URL('default', 'add'))}}
-    {{=A('Sell', _class='btn', _href=URL('default', 'add'))}}
+    {{=A('Buy', _class='btn', _href=URL('default', 'add1'))}}
+    {{=A('Sell', _class='btn', _href=URL('default', 'add1'))}}
     </p>
 </div>
 

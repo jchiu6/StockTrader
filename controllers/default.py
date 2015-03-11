@@ -20,7 +20,7 @@ import json
 import os
 
 data = []
-totalPoints = 50
+totalPoints = 25
 values = []
 prev = 0
 
@@ -47,22 +47,19 @@ def getRandomDataPy():
 
 def threadingValue():
     global values
-    global prev
     values = getRandomDataPy()
     #threading.Timer(1.0, threadingValue).start()
 
 def index():
-    global prev
     #print("hello console")
-    #values = getRandomDataPy()
-    #db.stock.insert(price=values)
+
     """Better index."""
     # Let's get all data. 
     #posts = db().select(db.stocktrader.ALL)
     #q = db.stocktrader
     
     show_all = request.args(0) == 'all'
-    q = (db.stocktrader) if show_all else (db.stocktrader.sold == False)
+    q = (db.stocktrader2) if show_all else (db.stocktrader2.sold == False)
     
     if show_all:
         button = A('See unsold', _class='btn', _href=URL('default', 'index'))
@@ -110,45 +107,76 @@ def index():
     #    db.stocktrader.bbmessage.readable = False
     
     #db.stocktrader.sold.show_if = (db.stocktrader.sold == True)
-    form = SQLFORM.grid(q,
-        fields=[db.stocktrader.user_id, db.stocktrader.date_posted, 
-                db.stocktrader.category, db.stocktrader.title, 
-                db.stocktrader.sold],
-        editable=False, deletable=False,
-        links=links,
-        paginate=5,
-        )
+#     form = SQLFORM.grid(q,
+#         fields=[db.stocktrader2.user_id, db.stocktrader2.date_posted, 
+#                 db.stocktrader2.category, db.stocktrader2.title, 
+#                 db.stocktrader2.sold],
+#         editable=False, deletable=False,
+#         links=links,
+#         paginate=5,
+#         )
     threadingValue()
-    return dict(form = form, button = button, values = values, prev = prev)
+    return dict( button = button, values = values, prev = prev)
 
-def index2():
-    global data
-    prevdb = db(db.stocks).select(orderby=~db.stocks.id).first()
-    if prevdb is None:
-        prev = 50
+def graphJson():
+    prevdb1 = db(db.stocks2.name == "1").select(orderby=~db.stocks2.id).first()
+    prevdb2 = db(db.stocks2.name == "2").select(orderby=~db.stocks2.id).first()
+    prevdb3 = db(db.stocks2.name == "3").select(orderby=~db.stocks2.id).first()
+    prevdb4 = db(db.stocks2.name == "4").select(orderby=~db.stocks2.id).first()
+    if prevdb1 is None:
+        prev1 = random.randint(0,100)
     else:
-        prev = prevdb.price
-        #print("index 2 prevdb.price",prevdb.price)
-
-    y = float(prev) + random.random() * 10 -5
-    if y < 0:
-        y = 0
-    elif y > 100:
-        y = 100
-    db.stocks.insert(name = "A", price = y)
+        prev1 = prevdb1.price
+    if prevdb2 is None:
+        prev2 = random.randint(0,100)
+    else:
+        prev2 = prevdb2.price
+    if prevdb3 is None:
+        prev3 = random.randint(0,100)
+    else:
+        prev3 = prevdb3.price
+    if prevdb4 is None:
+        prev4 = random.randint(0,100)
+    else:
+        prev4 = prevdb4.price
+    g1y = abs(int(prev1) + random.randint(0,10) -5)
+    g2y = abs(int(prev2) + random.randint(0,10) -5)
+    g3y = abs(int(prev3) + random.randint(0,10) -5)
+    g4y = abs(int(prev4) + random.randint(0,10) -5)
+    if g1y > 100:
+        g1y = 100
+    if g2y > 100:
+        g2y = 100
+    if g3y > 100:
+        g3y = 100
+    if g4y > 100:
+        g4y = 100
+    db.stocks2.insert(name = "1", price = g1y)
+    db.stocks2.insert(name = "2", price = g2y)
+    db.stocks2.insert(name = "3", price = g3y)
+    db.stocks2.insert(name = "4", price = g4y)
     z = strftime("%H:%M:%S", gmtime() )
-    return dict(y=y, z=z)
+    return dict(g1y = g1y, g2y = g2y, g3y = g3y, g4y = g4y, z=z)
 
-#@auth.requires_login()
-def add():
+@auth.requires_login()
+def add1():
     """Add a post."""
-    form = SQLFORM(db.stocktrader)
-    if form.process().accepted:
-        # Successful processing.
-        session.flash = T("inserted")
-        redirect(URL('default', 'index'))
-    return dict(form=form)
+    '''
+    get price at current index, subtract from user total, store name in user file. increase current stock value by randint(0,5)
+    if user total is neg, dont process anything
+    '''
+#     form = SQLFORM(db.stocktrader)
+#     if form.process().accepted:
+#         # Successful processing.
+#         session.flash = T("inserted")
+#         redirect(URL('default', 'index'))
+    return dict()#form=form)
 
+def sell1():
+    '''
+    get price at current index, add to user total, remove stock name from user file, decrease current stock value by randint (0,5)
+    '''
+    return dict()
 #@auth.requires_login()
 def toggle_sold():
      item = db.stocktrader(request.args(0)) or redirect(URL('default', 'index'))
