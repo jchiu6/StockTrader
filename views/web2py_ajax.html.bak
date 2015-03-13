@@ -14,7 +14,19 @@ response.files.insert(3,URL('static','js/web2py.js'))
 response.files.insert(4,URL('static','js/jquery.flot.js'))
 response.files.insert(5,URL('static','js/jquery.js'))
 response.files.insert(6,URL('static','css/examples.css'))
+response.files.insert(7,URL('static','js/jquery.flot.time.js'))
+response.files.insert(8,URL('static','js/jquery.flot.axislabels.js'))
 
+response.files.insert(9,URL('static','js/materialize.js'))
+response.files.insert(10,URL('static','js/materialize.min.js'))
+
+response.files.insert(11,URL('static','css/materialize.css'))
+response.files.insert(12,URL('static','css/materialize.min.css'))
+
+response.files.insert(13,URL('static','css/Material-Design-Icons.eot'))
+response.files.insert(14,URL('static','css/Material-Design-Icons.svg'))
+response.files.insert(15,URL('static','css/Material-Design-Icons.ttf'))
+response.files.insert(16,URL('static','css/Material-Design-Icons.woff'))
 
 response.include_meta()
 response.include_files()

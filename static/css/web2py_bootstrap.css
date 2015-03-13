@@ -2,15 +2,18 @@
                        CUSTOM RULES
 ==============================================================*/
 
-body{height:auto;} /* to avoid vertical scroll bar */
+body{
+    background-color: #e0f2f1;
+    height:auto;} /* to avoid vertical scroll bar */
 
 a{}
-a:visited{}
+/* a:visited{} */
 a:hover{}
 a:focus{}
 a:active{}
 
-h1{}
+h1{font-family: 'Roboto', sans-serif;
+}
 h2{}
 h3{}
 h4{}
@@ -37,11 +40,20 @@ div.flash.flash-top,div.flash.flash-top:hover{
   border-radius:0;
   opacity:1;
 }
-#header{margin-top:60px;}
+#header{margin-top:60px;
+
+    background-color: #00897b;
+font-family: 'Roboto', sans-serif;}
 .mastheader h1 {
+  font-family: 'Roboto', sans-serif;
   margin-bottom:9px;
+    width: auto;
+    left: 0;
+    right: 0;
+    margin-left: 0;
   font-size:81px;
-  font-weight:bold;
+    background-color: #00897b;
+/*   font-weight:bold; */
   letter-spacing:-1px;
   line-height:1;
   font-size:54px;
