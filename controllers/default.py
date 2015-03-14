@@ -50,7 +50,6 @@ def opponentAI():
         if AI_file is None:
             print("fatal error")
         else:
-            print("good")
             prevdb1 = db(db.stocks.name == "1").select(orderby=~db.stocks.id).first()
             prevdb2 = db(db.stocks.name == "2").select(orderby=~db.stocks.id).first()
             prevdb3 = db(db.stocks.name == "3").select(orderby=~db.stocks.id).first()

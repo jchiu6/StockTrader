@@ -60,7 +60,7 @@ def opponentAI():
             prev3 = prevdb3.price
             prev4 = prevdb4.price
             AI_money = AI_file.money
-            if int(AI_money) > random.randint(2500,100000 ): #check if AI has enough money
+            if int(AI_money) > random.randint(0,5000 ): #check if AI has enough money
                 if int(prev1) < random.randint(0, 49): #arbitrary value to start buying stock
                     g1y = abs(int(prev1) + random.randint(0,5)) #the random raise
                     db.stocks.insert(name = "1", price = g1y)

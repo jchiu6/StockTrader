@@ -41,16 +41,6 @@ input[type=checkbox] {
 	margin: 7px;
 }
 
-#header {
-    font-family: 'Roboto', sans-serif;
-	position: relative;
-	width: auto;
-    left: 0;
-    right: 0;
-    margin-left:0;
-    background-color: #ee6e73;
-}
-
 #header h2 {
     font-family: 'Roboto', sans-serif;
 	margin-left: 10px;
@@ -103,11 +93,14 @@ input[type=checkbox] {
 }
 
 #header {
-    background-color:black;
+    background-color:#00796b;
     color:white;
-    width: 100%;
+    width: auto;
     min-width:1100px:
     text-align:center;
+/*     left: 0;
+    right: 0;
+    margin-left:0; */
 
 }
 #column1 {

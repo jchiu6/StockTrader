@@ -10,7 +10,17 @@
         var now1 = new Date().getTime(), now2 = new Date().getTime(), now3 = new Date().getTime(), now4 = new Date().getTime();
         var dataPy1,dataPy2,dataPy3, dataPy4, prevVal1, prevVal2, prevVal3, prevVal4, AImoney, AIstock1, AIstock2, AIstock3, AIstock4;
         var data1 = [], data2 = [], data3 = [], data4 = [];
-
+        
+        var html = document.getElementsByTagName('html')[0];
+			var removeLoading = function() {
+				// In a production application you would remove the loading class when your
+				// application is initialized and ready to go.  Here we just artificially wait
+				// 3 seconds before removing the class.
+				setTimeout(function() {
+					html.className = html.className.replace(/indeterminate/, '');
+				}, 3000);
+			};
+			removeLoading();
 // Set up the control widget
         function pushGraph1() {
             if (data1.length > 0)
@@ -222,7 +232,7 @@
                     type: 'GET',
                     url: '/StockTrader/default/graphJson.json',
                     success: function(data) {
-
+                    $('#loadingDivStock').hide();
                     dataPy1 = data.g1y;
                     dataPy2 = data.g2y;
                     dataPy3 = data.g3y;
@@ -235,20 +245,20 @@
 
                     if(prevVal1>0) document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1+"   "+"<span style=\"color:#00695c\">"+"+"+prevVal1+"</span>";
                     else if(prevVal1<0) document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1 + "   " + "<span style=\"color:#ef5350\">" + prevVal1 + "</span>";
-                    else if (prevVal1==0) document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1 + "   " + prevVal1 ;
-
+                    else if (prevVal1==0) document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1 + "   " + "<span style=\"color:#64b5f6\">" + prevVal1 + "</span>";
+                    else document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1;
                     if (prevVal2>0) document.querySelector('.stock2').innerHTML ="Stock 2: "+dataPy2+"   "+"<span style=\"color:#00695c\">"+"+"+prevVal2+"</span>";
                     else if (prevVal2 < 0) document.querySelector('.stock2').innerHTML ="Stock 2: "+dataPy2 + "   " + "<span style=\"color:#ef5350\">" + prevVal2 + "</span>";
-                    else if (prevVal2 == 0) document.querySelector('.stock2').innerHTML ="Stock 2: "+dataPy2 + "   " + prevVal2 ;
-
+                    else if (prevVal2 == 0) document.querySelector('.stock2').innerHTML ="Stock 2: "+dataPy2 + "   " + "<span style=\"color:#64b5f6\">" + prevVal2 + "</span>";
+                    else document.querySelector('.stock2').innerHTML ="Stock 2: "+dataPy2;
                     if (prevVal3 > 0) document.querySelector('.stock3').innerHTML ="Stock 3: "+dataPy3+"   "+"<span style=\"color:#00695c\">"+"+"+prevVal3+"</span>";
                     else if (prevVal3 < 0) document.querySelector('.stock3').innerHTML ="Stock 3: "+dataPy3 + "   " + "<span style=\"color:#ef5350\">" + prevVal3 + "</span>";
-                    else if (prevVal3 == 0) document.querySelector('.stock3').innerHTML ="Stock 3: "+dataPy3 + "   " + prevVal3 ;
-
+                    else if (prevVal3 == 0) document.querySelector('.stock3').innerHTML ="Stock 3: "+dataPy3 + "   " + "<span style=\"color:#64b5f6\">" + prevVal3 + "</span>";
+                    else document.querySelector('.stock3').innerHTML ="Stock 3: "+dataPy3;
                     if (prevVal4 > 0) document.querySelector('.stock4').innerHTML ="Stock 4: "+dataPy4+"   "+"<span style=\"color:#00695c\">"+"+"+prevVal4+"</span>";
                     else if (prevVal4 < 0) document.querySelector('.stock4').innerHTML ="Stock 4: "+dataPy4 + "   " + "<span style=\"color:#ef5350\">" + prevVal4 + "</span>";
-                    else if (prevVal4 == 0) document.querySelector('.stock4').innerHTML ="Stock 4: "+dataPy4 + "   " + prevVal4 ;
-
+                    else if (prevVal4 == 0) document.querySelector('.stock4').innerHTML ="Stock 4: "+dataPy4 + "   " + "<span style=\"color:#64b5f6\">" + prevVal4 + "</span>";
+                    else document.querySelector('.stock4').innerHTML ="Stock 4: "+dataPy4;
 
                     }
                 });
@@ -258,6 +268,7 @@
                     type: 'GET',
                     url: '/StockTrader/default/opponentAI.json',
                     success: function(data) {
+                    $('#loadingDivAI').hide();
                         AImoney = data.AI_money;
                         AIstock1 = data.AI_stock1;
                         AIstock2 = data.AI_stock2;
@@ -302,8 +313,9 @@
        <div class="card-content">
            <span class="card-title activator grey-text text-darken-4">Stock 1 <i class="mdi-navigation-more-vert right"></i></span>
            <p>
-                <a class="waves-effect waves-light" href="StockTrader/default/buy1">Buy</a>
-                <a class="waves-effect waves-light" href="StockTrader/default/sell1">Sell</a>
+                {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy1'))}}
+                {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell1'))}}
+             <!--   <a class="waves-effect waves-light" href="StockTrader/default/sell1">Sell</a> -->
            </p>
        </div>
        <div class="card-reveal">
@@ -334,8 +346,10 @@
             <span class="card-title activator grey-text text-darken-4">Stock 2<i class="mdi-navigation-more-vert right"></i></span>
             <p>
 <!--                 <a class="waves-effect waves-light btn">Stuff</a> -->
-                <a class="waves-effect waves-light" href="StockTrader/default/buy2">Buy</a>
-                <a class="waves-effect waves-light" href="StockTrader/default/sell2">Sell</a>
+<!--                 <a class="waves-effect waves-light" href="StockTrader/default/buy2">Buy</a> -->
+                    {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy2'))}}
+                    {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell2'))}}
+<!--                 <a class="waves-effect waves-light" href="/StockTrader/default/sell2">Sell</a> -->
             </p>
         </div>
         <div class="card-reveal">
@@ -356,8 +370,10 @@
         <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">Stock 3 <i class="mdi-navigation-more-vert right"></i></span>
             <p>
-                <a class="waves-effect waves-light" href="StockTrader/default/buy3">Buy</a>
-                <a class="waves-effect waves-light" href="StockTrader/default/sell3">Sell</a>
+                    {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy3'))}}
+                    {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell3'))}}
+<!--                 <a class="waves-effect waves-light" href="StockTrader/default/buy3">Buy</a>
+                <a class="waves-effect waves-light" href="StockTrader/default/sell3">Sell</a> -->
             </p>
         </div>
         <div class="card-reveal">
@@ -377,8 +393,10 @@
         <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">Stock 4 <i class="mdi-navigation-more-vert right"></i></span>
             <p>
-                <a class="waves-effect waves-light" href="StockTrader/default/buy4">Buy</a>
-                <a class="waves-effect waves-light" href="StockTrader/default/sell4">Sell</a>
+                    {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy4'))}}
+                    {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell4'))}}
+<!--                 <a class="waves-effect waves-light" href="StockTrader/default/buy4">Buy</a>
+                <a class="waves-effect waves-light" href="StockTrader/default/sell4">Sell</a> -->
             </p>
         </div>
         <div class="card-reveal">
@@ -418,6 +436,21 @@
         <div class = "card-panel teal">
             <span class="white-text">
                 <p>
+                    <div id = 'loadingDivStock'>
+                        <div class="preloader-wrapper medium active">
+                            <div class="spinner-layer spinner-white-only">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class ="stock1"></div>
                     <div class ="stock2"></div>
                     <div class ="stock3"></div>
@@ -442,6 +475,21 @@
         <div class = "card-panel teal">
             <span class="white-text">
                 <p>
+                    <div id = 'loadingDivAI'>
+                         <div class="preloader-wrapper medium active">
+                            <div class="spinner-layer spinner-white-only">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class ="AImoney"></div>
                     <div class ="AIstock1"></div>
                     <div class ="AIstock2"></div>
