@@ -162,9 +162,9 @@ def graphJson():
         g4y = abs(int(prev4) + random.randint(0,10000) -random.randint(0,7500))
         volatile = random.randint(0,100)
 
-        if(volatile > 40):
+        if(volatile > 40 and g3y > 0):
             g3y = g3y - random.randint(0,500)
-        if(volatile > 30):
+        if(volatile > 30 and g4y > 0):
             g4y = g4y - random.randint(0,5000)
 
         if g1y > 100:
@@ -183,14 +183,12 @@ def graphJson():
             db(db.stocks.id.name == "3").select(orderby=db.stocks.id).first().delete_record()
             db(db.stocks.id.name == "4").select(orderby=db.stocks.id).first().delete_record()
             dbSize = db(db.stocks.id>0).count()
-            print("deleting?",dbSize)
 
         db.stocks.insert(name = "1", price = g1y)
         db.stocks.insert(name = "2", price = g2y)
         db.stocks.insert(name = "3", price = g3y)
         db.stocks.insert(name = "4", price = g4y)
-    z = strftime("%H:%M:%S", gmtime() )
-    return json.dumps({'g1y':g1y, "g2y":g2y,"g3y":g3y,"g4y":g4y,"z": z})
+    return json.dumps({'g1y':g1y, "g2y":g2y,"g3y":g3y,"g4y":g4y})
 
 @auth.requires_login()
 def reset():
@@ -202,13 +200,10 @@ def reset():
         while int(dbSize) > 0: #if the db is larger than 2 years worth of data, delete the last entry
             db(db.stocks).select(orderby=db.stocks.id).first().delete_record()
             dbSize = db(db.stocks.id>0).count()
-            session.flash = T("Clearing Database, please hold on")
-            print("deleting?",dbSize)
         if AI_file is None:
             print("fatal error")
         else:
             AI_file.update_record(money = 10000, stock1_shares_owned = 0, stock2_shares_owned = 0, stock3_shares_owned = 0, stock4_shares_owned = 0)
-
         if row is None:
             print("fatal error")
         else:
