@@ -1,0 +1,450 @@
+# -*- coding: utf-8 -*-
+# this file is released under public domain and you can use without limitations
+
+#########################################################################
+## This is a sample controller
+## - index is the default action of any application
+## - user is required for authentication and authorization
+## - download is for downloading files uploaded in the db (does streaming)
+## - api is an example of Hypermedia API support and access control
+#########################################################################
+
+import datetime
+import logging
+import random
+import time
+from time import gmtime, strftime
+import threading
+from socket import *
+import json
+import os
+
+def index():
+    player_money = 0
+    stock1 = 0
+    stock2 = 0
+    stock3 = 0
+    stock4 = 0
+    if auth.user_id:
+        #session.flash=T("user is logged in")
+        player_file = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
+        if player_file is None:
+            redirect(URL('default','profileCreate'))
+        else:
+            player_money = player_file.money
+            stock1 = player_file.stock1_shares_owned
+            stock2 = player_file.stock2_shares_owned
+            stock3 = player_file.stock3_shares_owned
+            stock4 = player_file.stock4_shares_owned
+
+    return dict(player_money = player_money, stock1 = stock1, stock2 = stock2, stock3 = stock3, stock4 = stock4)
+
+def opponentAI():
+    AI_money = 0
+    AI_stock1 = 0
+    AI_stock2 = 0
+    AI_stock3 = 0
+    AI_stock4 = 0
+    if auth.user_id:
+        AI_file = db(db.AI.user_id == auth.user_id).select(orderby=~db.AI.id).first()
+        if AI_file is None:
+            print("fatal error")
+        else:
+            prevdb1 = db(db.stocks.name == "1").select(orderby=~db.stocks.id).first()
+            prevdb2 = db(db.stocks.name == "2").select(orderby=~db.stocks.id).first()
+            prevdb3 = db(db.stocks.name == "3").select(orderby=~db.stocks.id).first()
+            prevdb4 = db(db.stocks.name == "4").select(orderby=~db.stocks.id).first()
+            prev1 = prevdb1.price #dont need to check if NULL since graphJson ajax is called first
+            prev2 = prevdb2.price
+            prev3 = prevdb3.price
+            prev4 = prevdb4.price
+            AI_money = AI_file.money
+            if int(AI_money) > random.randint(0,5000 ): #check if AI has enough money
+                if int(prev1) < random.randint(0, 49): #arbitrary value to start buying stock
+                    g1y = abs(int(prev1) + random.randint(0,5)) #the random raise
+                    db.stocks.insert(name = "1", price = g1y)
+                    AI_file.stock1_shares_owned = int(AI_file.stock1_shares_owned) + 1 #increase count by 1
+                    AI_file.money = int(AI_file.money) - int(prev1) #take away money
+                    AI_file.update_record(money = AI_file.money, stock1_shares_owned = AI_file.stock1_shares_owned)
+
+                if int(prev2) < 490 and int(AI_money) > 5000:
+                    g2y = abs(int(prev2) + random.randint(0,5)) #the random raise
+                    db.stocks.insert(name = "2", price = g2y)
+                    AI_file.stock2_shares_owned = int(AI_file.stock2_shares_owned) + 1 #increase count by 1
+                    AI_file.money = int(AI_file.money) - int(prev2) #take away money
+                    AI_file.update_record(money = AI_file.money, stock2_shares_owned = AI_file.stock2_shares_owned)                    
+
+                if int(prev3) < 4000 and int(AI_money) > 20000:
+                    g3y = abs(int(prev3) + random.randint(0,5)) #the random raise
+                    db.stocks.insert(name = "3", price = g3y)
+                    AI_file.stock3_shares_owned = int(AI_file.stock3_shares_owned) + 1 #increase count by 1
+                    AI_file.money = int(AI_file.money) - int(prev3) #take away money
+                    AI_file.update_record(money = AI_file.money, stock3_shares_owned = AI_file.stock3_shares_owned)
+
+                if int(prev4) < 35000 and int(AI_money) > 150000:
+                    g4y = abs(int(prev4) + random.randint(0,5)) #the random raise
+                    db.stocks.insert(name = "4", price = g4y)
+                    AI_file.stock4_shares_owned = int(AI_file.stock4_shares_owned) + 1 #increase count by 1
+                    AI_file.money = int(AI_file.money) - int(prev4) #take away money
+                    AI_file.update_record(money = AI_file.money, stock4_shares_owned = AI_file.stock4_shares_owned)
+
+            if int(AI_file.stock1_shares_owned) > 0 and int(prev1) > 51:
+                g1y = abs(int(prev1) - random.randint(0,5)) #random decline
+                db.stocks.insert(name = "1", price = g1y)
+                AI_file.stock1_shares_owned = int(AI_file.stock1_shares_owned) - 1
+                AI_file.money = int(AI_file.money) + int(prev1) #take add money
+                AI_file.update_record(money = AI_file.money, stock1_shares_owned = AI_file.stock1_shares_owned)
+
+            if int(AI_file.stock2_shares_owned) > 0 and int(prev2) > 600:
+                g2y = abs(int(prev2) - random.randint(0,5)) #random decline
+                db.stocks.insert(name = "2", price = g2y)
+                AI_file.stock2_shares_owned = int(AI_file.stock2_shares_owned) - 1
+                AI_file.money = int(AI_file.money) + int(prev2) #take add money
+                AI_file.update_record(money = AI_file.money, stock2_shares_owned = AI_file.stock2_shares_owned)
+
+            if int(AI_file.stock3_shares_owned) > 0 and int(prev3) > 5100:
+                g3y = abs(int(prev3) - random.randint(0,5)) #random decline
+                db.stocks.insert(name = "3", price = g3y)
+                AI_file.stock3_shares_owned = int(AI_file.stock3_shares_owned) - 1
+                AI_file.money = int(AI_file.money) + int(prev3) #take add money
+                AI_file.update_record(money = AI_file.money, stock3_shares_owned = AI_file.stock3_shares_owned)
+
+            if int(AI_file.stock4_shares_owned) > 0 and int(prev4) > 50000:
+                g4y = abs(int(prev4) - random.randint(0,5)) #random decline
+                db.stocks.insert(name = "4", price = g4y)
+                AI_file.stock4_shares_owned = int(AI_file.stock4_shares_owned) - 1
+                AI_file.money = int(AI_file.money) + int(prev4) #take add money
+                AI_file.update_record(money = AI_file.money, stock4_shares_owned = AI_file.stock4_shares_owned)
+
+            AI_money = AI_file.money
+            AI_stock1 = AI_file.stock1_shares_owned
+            AI_stock2 = AI_file.stock2_shares_owned
+            AI_stock3 = AI_file.stock3_shares_owned
+            AI_stock4 = AI_file.stock4_shares_owned
+    return json.dumps({"AI_money":AI_money, "AI_stock1":AI_stock1,"AI_stock2":AI_stock2,"AI_stock3":AI_stock3,"AI_stock4": AI_stock4})
+
+def profileCreate():
+    form = SQLFORM(db.stocktrader)
+    if form.process().accepted:
+        db.AI.insert(name = auth.user.first_name+"AI")
+        redirect(URL('default','index'))
+    return dict(form = form)
+
+def graphJson():
+    g1y = 0
+    g2y = 0
+    g3y = 0
+    g4y = 0
+    if auth.user_id:
+        prevdb1 = db(db.stocks.name == "1").select(orderby=~db.stocks.id).first()
+        prevdb2 = db(db.stocks.name == "2").select(orderby=~db.stocks.id).first()
+        prevdb3 = db(db.stocks.name == "3").select(orderby=~db.stocks.id).first()
+        prevdb4 = db(db.stocks.name == "4").select(orderby=~db.stocks.id).first()
+        if prevdb1 is None:
+            prev1 = random.randint(0,100)
+        else:
+            prev1 = prevdb1.price
+        if prevdb2 is None:
+            prev2 = random.randint(0,100)
+        else:
+            prev2 = prevdb2.price
+        if prevdb3 is None:
+            prev3 = random.randint(0,100)
+        else:
+            prev3 = prevdb3.price
+        if prevdb4 is None:
+            prev4 = random.randint(0,100)
+        else:
+            prev4 = prevdb4.price
+        g1y = abs(int(prev1) + random.randint(0,7) - 5)
+        g2y = abs(int(prev2) + random.randint(0,100) -50)
+        g3y = abs(int(prev3) + random.randint(0,1000) -random.randint(0,625))
+        g4y = abs(int(prev4) + random.randint(0,10000) -random.randint(0,7500))
+        volatile = random.randint(0,100)
+
+        if(volatile > 40 and g3y > 0):
+            g3y = g3y - random.randint(0,500)
+        if(volatile > 30 and g4y > 0):
+            g4y = g4y - random.randint(0,5000)
+
+        if g1y > 100:
+            g1y = 100
+        if g2y > 1000:
+            g2y = 1000
+        if g3y > 10000:
+            g3y = 10000
+        if g4y > 100000:
+            g4y = 100000
+        query=(db.stocks.id>0)
+        dbSize = db(query).count()
+        while int(dbSize) > 730: #if the db is larger than 0.5 years worth of data, delete the last entry
+            db(db.stocks.id.name == "1").select(orderby=db.stocks.id).first().delete_record()
+            db(db.stocks.id.name == "2").select(orderby=db.stocks.id).first().delete_record()
+            db(db.stocks.id.name == "3").select(orderby=db.stocks.id).first().delete_record()
+            db(db.stocks.id.name == "4").select(orderby=db.stocks.id).first().delete_record()
+            dbSize = db(db.stocks.id>0).count()
+
+        db.stocks.insert(name = "1", price = g1y)
+        db.stocks.insert(name = "2", price = g2y)
+        db.stocks.insert(name = "3", price = g3y)
+        db.stocks.insert(name = "4", price = g4y)
+    return json.dumps({'g1y':g1y, "g2y":g2y,"g3y":g3y,"g4y":g4y})
+
+@auth.requires_login()
+def reset():
+    if auth.user_id:
+        AI_file = db(db.AI.user_id == auth.user_id).select(orderby=~db.AI.id).first()
+        row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
+        query=(db.stocks.id>0)
+        dbSize = db(query).count()
+        while int(dbSize) > 0: #if the db is larger than 2 years worth of data, delete the last entry
+            db(db.stocks).select(orderby=db.stocks.id).first().delete_record()
+            dbSize = db(db.stocks.id>0).count()
+        if AI_file is None:
+            print("fatal error")
+        else:
+            AI_file.update_record(money = 10000, stock1_shares_owned = 0, stock2_shares_owned = 0, stock3_shares_owned = 0, stock4_shares_owned = 0)
+        if row is None:
+            print("fatal error")
+        else:
+            row.update_record(money = 10000, stock1_shares_owned = 0, stock2_shares_owned = 0, stock3_shares_owned = 0, stock4_shares_owned = 0)    
+    session.flash=T("Reset complete!")
+    redirect(URL('default','index'))
+    return dict()
+
+@auth.requires_login()
+def buy1():
+    """Add a post."""
+    '''
+    get price at current index, subtract from user total, store stock value in user file. increase current stock value by randint(0,5)
+    if user total is neg, dont process anything
+    '''
+    prevdb1 = db(db.stocks.name == "1").select(orderby=~db.stocks.id).first()
+    row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
+    
+    if int(row.money) > 0:
+        prev1 = prevdb1.price
+        g1y = abs(int(prev1) + random.randint(0,5))
+        db.stocks.insert(name = "1", price = g1y)
+        #need check for if player has enough money
+
+        row.stock1_shares_owned = int(row.stock1_shares_owned) + 1
+        row.money = int(row.money) - int(prev1) #take away money
+        row.update_record(money = row.money, stock1_shares_owned = row.stock1_shares_owned)
+    else:
+        session.flash=T("You do not have enough money to buy Shares!")
+    redirect(URL('default','index'))
+    return dict()
+
+@auth.requires_login()
+def sell1():
+    '''
+    get price at current index, add to user total, remove stock value from user file, decrease current stock value by randint (0,5)
+    '''
+    prevdb1 = db(db.stocks.name == "1").select(orderby=~db.stocks.id).first()
+    row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
+    
+    if int(row.stock1_shares_owned) > 0:
+        prev1 = prevdb1.price
+        g1y = abs(int(prev1) - random.randint(0,5))
+        db.stocks.insert(name = "1", price = g1y)
+
+        #need check if user owns any shares in stock
+
+        row.stock1_shares_owned = int(row.stock1_shares_owned) - 1
+        row.money = int(row.money) + int(prev1) #take add money
+        row.update_record(money = row.money, stock1_shares_owned = row.stock1_shares_owned)
+    else:
+        session.flash=T("You don't own any Shares of Stock 1!")
+    redirect(URL('default','index'))
+    return dict()
+
+@auth.requires_login()
+def buy2():
+    """Add a post."""
+    '''
+    get price at current index, subtract from user total, store stock value in user file. increase current stock value by randint(0,5)
+    if user total is neg, dont process anything
+    '''
+    prevdb2 = db(db.stocks.name == "2").select(orderby=~db.stocks.id).first()
+    row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
+    
+    if int(row.money) > 0:
+        prev2 = prevdb2.price
+        g2y = abs(int(prev2) + random.randint(0,5))
+        db.stocks.insert(name = "2", price = g2y)
+        #need check for if player has enough money
+
+        row.stock2_shares_owned = int(row.stock2_shares_owned) + 1
+        row.money = int(row.money) - int(prev2) #take away money
+        row.update_record(money = row.money, stock2_shares_owned = row.stock2_shares_owned)
+    else:
+        session.flash=T("You do not have enough money to buy Shares!")
+    redirect(URL('default','index'))
+    return dict()
+
+@auth.requires_login()
+def sell2():
+    '''
+    get price at current index, add to user total, remove stock value from user file, decrease current stock value by randint (0,5)
+    '''
+    prevdb2 = db(db.stocks.name == "2").select(orderby=~db.stocks.id).first()
+    row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
+    
+    if int(row.stock2_shares_owned) > 0:
+        prev2 = prevdb2.price
+        g2y = abs(int(prev2) - random.randint(0,5))
+        db.stocks.insert(name = "2", price = g2y)
+
+        #need check if user owns any shares in stock
+
+        row.stock2_shares_owned = int(row.stock2_shares_owned) - 1
+        row.money = int(row.money) + int(prev2) #take add money
+        row.update_record(money = row.money, stock2_shares_owned = row.stock2_shares_owned)
+    else:
+        session.flash=T("You don't own any Shares of Stock 2!")
+    redirect(URL('default','index'))
+    return dict()
+
+@auth.requires_login()
+def buy3():
+    """Add a post."""
+    '''
+    get price at current index, subtract from user total, store stock value in user file. increase current stock value by randint(0,5)
+    if user total is neg, dont process anything
+    '''
+    prevdb3 = db(db.stocks.name == "3").select(orderby=~db.stocks.id).first()
+    row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
+    
+    if int(row.money) > 0:
+        prev3 = prevdb3.price
+        g3y = abs(int(prev3) + random.randint(0,5))
+        db.stocks.insert(name = "3", price = g3y)
+        #need check for if player has enough money
+
+        row.stock3_shares_owned = int(row.stock3_shares_owned) + 1
+        row.money = int(row.money) - int(prev3) #take away money
+        row.update_record(money = row.money, stock3_shares_owned = row.stock3_shares_owned)
+    else:
+        session.flash=T("You do not have enough money to buy Shares!")
+    redirect(URL('default','index'))
+    return dict()
+
+@auth.requires_login()
+def sell3():
+    '''
+    get price at current index, add to user total, remove stock value from user file, decrease current stock value by randint (0,5)
+    '''
+    prevdb3 = db(db.stocks.name == "3").select(orderby=~db.stocks.id).first()
+    row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
+    
+    if int(row.stock3_shares_owned) > 0:
+        prev3 = prevdb3.price
+        g3y = abs(int(prev3) - random.randint(0,5))
+        db.stocks.insert(name = "3", price = g3y)
+
+        #need check if user owns any shares in stock
+
+        row.stock3_shares_owned = int(row.stock3_shares_owned) - 1
+        row.money = int(row.money) + int(prev3) #take add money
+        row.update_record(money = row.money, stock3_shares_owned = row.stock3_shares_owned)
+    else:
+        session.flash=T("You don't own any Shares of Stock 3!")
+    redirect(URL('default','index'))
+    return dict()
+
+@auth.requires_login()
+def buy4():
+    """Add a post."""
+    '''
+    get price at current index, subtract from user total, store stock value in user file. increase current stock value by randint(0,5)
+    if user total is neg, dont process anything
+    '''
+    prevdb4 = db(db.stocks.name == "4").select(orderby=~db.stocks.id).first()
+    row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
+    
+    if int(row.money) > 0:
+        prev4 = prevdb4.price
+        g4y = abs(int(prev4) + random.randint(0,5))
+        db.stocks.insert(name = "4", price = g4y)
+        #need check for if player has enough money
+
+        row.stock4_shares_owned = int(row.stock4_shares_owned) + 1
+        row.money = int(row.money) - int(prev4) #take away money
+        row.update_record(money = row.money, stock4_shares_owned = row.stock4_shares_owned)
+    else:
+        session.flash=T("You do not have enough money to buy Shares!")
+    redirect(URL('default','index'))
+    return dict()
+
+@auth.requires_login()
+def sell4():
+    '''
+    get price at current index, add to user total, remove stock value from user file, decrease current stock value by randint (0,5)
+    '''
+    prevdb4 = db(db.stocks.name == "4").select(orderby=~db.stocks.id).first()
+    row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
+    
+    if int(row.stock4_shares_owned) > 0:
+        prev4 = prevdb4.price
+        g4y = abs(int(prev4) - random.randint(0,5))
+        db.stocks.insert(name = "4", price = g4y)
+
+        #need check if user owns any shares in stock
+
+        row.stock4_shares_owned = int(row.stock4_shares_owned) - 1
+        row.money = int(row.money) + int(prev4) #take add money
+        row.update_record(money = row.money, stock4_shares_owned = row.stock4_shares_owned)
+    else:
+        session.flash=T("You don't own any Shares of Stock 4!")
+    redirect(URL('default','index'))
+    return dict()
+
+def user():
+    """
+    exposes:
+    http://..../[app]/default/user/login
+    http://..../[app]/default/user/logout
+    http://..../[app]/default/user/register
+    http://..../[app]/default/user/profile
+    http://..../[app]/default/user/retrieve_password
+    http://..../[app]/default/user/change_password
+    http://..../[app]/default/user/manage_users (requires membership in
+    use @auth.requires_login()
+        @auth.requires_membership('group name')
+        @auth.requires_permission('read','table name',record_id)
+    to decorate functions that need access control
+    """
+    return dict(form=auth())
+
+
+@cache.action()
+def download():
+    """
+    allows downloading of uploaded files
+    http://..../[app]/default/download/[filename]
+    """
+    return response.download(request, db)
+
+
+def call():
+    """
+    exposes services. for example:
+    http://..../[app]/default/call/jsonrpc
+    decorate with @services.jsonrpc the functions to expose
+    supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
+    """
+    return service()
+
+
+@auth.requires_login() 
+def api():
+    """
+    this is example of API with access control
+    WEB2PY provides Hypermedia API (Collection+JSON) Experimental
+    """
+    from gluon.contrib.hypermedia import Collection
+    rules = {
+        '<tablename>': {'GET':{},'POST':{},'PUT':{},'DELETE':{}},
+        }
+    return Collection(db).process(request,response,rules)

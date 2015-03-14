@@ -1,0 +1,572 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+{{extend 'layout.html'}}
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript">
+
+    $(function() {
+        $('#loadingspin').hide();
+        var totalPoints = 24, updateInterval = 5000; //milliseconds
+        var now1 = new Date().getTime(), now2 = new Date().getTime(), now3 = new Date().getTime(), now4 = new Date().getTime();
+        var dataPy1,dataPy2,dataPy3, dataPy4, prevVal1, prevVal2, prevVal3, prevVal4, AImoney, AIstock1, AIstock2, AIstock3, AIstock4, currentTime;
+        var data1 = [], data2 = [], data3 = [], data4 = [];
+
+        function pushGraph1() {
+            if (data1.length > 0)
+            data1.shift();
+            while(data1.length < totalPoints) {
+                var y = dataPy1;
+                var temp = [now1 += updateInterval, y];
+                data1.push(temp);
+             }
+            return data1;
+        }
+
+        function pushGraph2() {
+            if (data2.length > 0)
+            data2.shift();
+            while(data2.length < totalPoints) {
+                var y = dataPy2;
+                var temp = [now2 += updateInterval, y];
+                data2.push(temp);
+            }
+            return data2;
+        }
+
+        function pushGraph3() {
+            if (data3.length > 0)
+            data3.shift();
+            while(data3.length < totalPoints) {
+                var y = dataPy3;
+                var temp = [now3 += updateInterval, y];
+                data3.push(temp);
+            }
+            return data3;
+        }
+
+        function pushGraph4() {
+            if (data4.length > 0)
+            data4.shift();
+            while(data4.length < totalPoints) {
+                var y = dataPy4;
+                var temp = [now4 += updateInterval, y];
+                data4.push(temp);
+            }
+            return data4;
+        }
+
+        $("#updateInterval").val(updateInterval).change(function () {
+            var v = $(this).val();
+            if (v && !isNaN(+v)) {
+                updateInterval = +v;
+                if (updateInterval < 1) {
+                    updateInterval = 1;
+                } else if (updateInterval > 2000) {
+                    updateInterval = 2000;
+                }
+                $(this).val("" + updateInterval);
+            }
+        });
+
+        var plot1 = $.plot("#placeholder1", [pushGraph1()] , {
+            series: {
+                shadowSize: 0,  // Drawing is faster without shadows
+                color: 'rgba(128,203,196, 1.0)',
+                lines: {
+                    show: true,
+                    lineWidth: 1.2,
+                    fill: true,
+                    fillColor: 'rgba(128,203,196, 0.6)'
+                }
+            },
+            yaxis: {
+                min: 0,
+                max: 100
+            },
+            xaxis: {
+                    mode: "time",
+                    tickSize: [30, "second"],
+                    tickFormatter: function (v, axis) {
+                        var date = new Date(v);
+
+                        if (date.getSeconds() % 60 == 0) {
+                            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes()-2 : date.getMinutes()-2;
+                            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds(): date.getSeconds();
+
+                            return hours + ":" + minutes + ":" + seconds;
+                        } else {
+                            return "";
+                        }
+                    },
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 10,
+                axisLabelFontFamily: 'Verdana, Arial',
+            },
+            legend: {
+                labelBoxBorderColor: "#fff"
+            }
+        });
+
+        var plot2 = $.plot("#placeholder2", [ pushGraph2() ], {
+            series: {
+                shadowSize: 0,  // Drawing is faster without shadows
+                color:  'rgba(79,195,247,1.0)',
+                lines: {
+                    show: true,
+                    lineWidth: 1.2,
+                    fill: true,
+                    fillColor: 'rgba(79,195,247,0.6)'
+                }
+            },
+            yaxis: {
+                min: 0,
+                max: 1000
+            },
+            xaxis: {
+                mode: "time",
+                    tickSize: [30, "second"],
+                    tickFormatter: function (v, axis) {
+                        var date = new Date(v);
+
+                        if (date.getSeconds() % 60 == 0) {
+                            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes()-2 : date.getMinutes()-2;
+                            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds(): date.getSeconds();
+                            
+                            return hours + ":" + minutes + ":" + seconds;
+                        } else {
+                            return "";
+                        }
+                    },
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 10,
+                axisLabelFontFamily: 'Verdana, Arial',
+            }
+        });
+        
+        var plot3 = $.plot("#placeholder3", [ pushGraph3() ], {
+            series: {
+                shadowSize: 0,  // Drawing is faster without shadows
+                color: 'rgba(129,199,132,1.0)',
+                lines: {
+                    show: true,
+                    lineWidth: 1.2,
+                    fill: true,
+                    fillcolor: 'rgba(129,199,132,0.6)',
+                }
+            },
+            yaxis: {
+                min: 0,
+                max: 10000
+            },
+            xaxis: {
+                mode: "time",
+                    tickSize: [30, "second"],
+                    tickFormatter: function (v, axis) {
+                        var date = new Date(v);
+
+                        if (date.getSeconds() % 60 == 0) {
+                            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes()-2 : date.getMinutes()-2;
+                            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds(): date.getSeconds();
+
+                            return hours + ":" + minutes + ":" + seconds;
+                        } else {
+                            return "";
+                        }
+                    },
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 10,
+                axisLabelFontFamily: 'Verdana, Arial',
+            }
+        });
+        
+        var plot4 = $.plot("#placeholder4", [ pushGraph4() ], {
+            series: {
+                shadowSize: 0,  // Drawing is faster without shadows
+                lines: {
+                    show: true,
+                    lineWidth: 1.2,
+                    fill: true
+                } 
+            },
+            yaxis: {
+                min: 0,
+                max: 100000
+            },
+            xaxis: {
+                mode: "time",
+                    tickSize: [30, "second"],
+                    tickFormatter: function (v, axis) {
+                        var date = new Date(v);
+
+                        if (date.getSeconds() % 60 == 0) {
+                            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes()-2 : date.getMinutes()-2;
+                            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds(): date.getSeconds();
+
+                            return hours + ":" + minutes + ":" + seconds;
+                        } else {
+                            return "";
+                        }
+                    },
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 10,
+                axisLabelFontFamily: 'Verdana, Arial',
+            }
+        });
+        
+        function update() {
+            prevVal1 = dataPy1;
+            prevVal2 = dataPy2;
+            prevVal3 = dataPy3;
+            prevVal4 = dataPy4;
+            $(function() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/StockTrader/default/graphJson.json',
+                    success: function(data) {
+                    $('#loadingDivStock').hide();
+                    dataPy1 = data.g1y;
+                    dataPy2 = data.g2y;
+                    dataPy3 = data.g3y;
+                    dataPy4 = data.g4y;
+
+                    prevVal1 = dataPy1 - prevVal1;
+                    prevVal2 = dataPy2 - prevVal2;
+                    prevVal3 = dataPy3 - prevVal3;
+                    prevVal4 = dataPy4 - prevVal4;
+
+                    if(prevVal1>0) document.querySelector('.stock1').innerHTML ="Stock 1: $"+dataPy1+" "+"<span style=\"color:#00695c\">"+"+"+prevVal1+"</span>";
+                    else if(prevVal1<0) document.querySelector('.stock1').innerHTML ="Stock 1: $"+dataPy1 +" " + "<span style=\"color:#ef5350\">" + prevVal1 + "</span>";
+                    else if (prevVal1==0) document.querySelector('.stock1').innerHTML ="Stock 1: $"+dataPy1 + " " + "<span style=\"color:#64b5f6\">" + prevVal1 + "</span>";
+                    else document.querySelector('.stock1').innerHTML ="Stock 1: $"+dataPy1;
+                    if (prevVal2>0) document.querySelector('.stock2').innerHTML ="Stock 2: $"+dataPy2+"   "+"<span style=\"color:#00695c\">"+"+"+prevVal2+"</span>";
+                    else if (prevVal2 < 0) document.querySelector('.stock2').innerHTML ="Stock 2: $"+dataPy2 + "   " + "<span style=\"color:#ef5350\">" + prevVal2 + "</span>";
+                    else if (prevVal2 == 0) document.querySelector('.stock2').innerHTML ="Stock 2: $"+dataPy2 + "   " + "<span style=\"color:#64b5f6\">" + prevVal2 + "</span>";
+                    else document.querySelector('.stock2').innerHTML ="Stock 2: $"+dataPy2;
+                    if (prevVal3 > 0) document.querySelector('.stock3').innerHTML ="Stock 3: $"+dataPy3+"   "+"<span style=\"color:#00695c\">"+"+"+prevVal3+"</span>";
+                    else if (prevVal3 < 0) document.querySelector('.stock3').innerHTML ="Stock 3: $"+dataPy3 + "   " + "<span style=\"color:#ef5350\">" + prevVal3 + "</span>";
+                    else if (prevVal3 == 0) document.querySelector('.stock3').innerHTML ="Stock 3: $"+dataPy3 + "   " + "<span style=\"color:#64b5f6\">" + prevVal3 + "</span>";
+                    else document.querySelector('.stock3').innerHTML ="Stock 3: $"+dataPy3;
+                    if (prevVal4 > 0) document.querySelector('.stock4').innerHTML ="Stock 4: $"+dataPy4+"   "+"<span style=\"color:#00695c\">"+"+"+prevVal4+"</span>";
+                    else if (prevVal4 < 0) document.querySelector('.stock4').innerHTML ="Stock 4: $"+dataPy4 + "   " + "<span style=\"color:#ef5350\">" + prevVal4 + "</span>";
+                    else if (prevVal4 == 0) document.querySelector('.stock4').innerHTML ="Stock 4: $"+dataPy4 + "   " + "<span style=\"color:#64b5f6\">" + prevVal4 + "</span>";
+                    else document.querySelector('.stock4').innerHTML ="Stock 4: $"+dataPy4;
+
+                    }
+                });
+            });
+            $(function() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/StockTrader/default/opponentAI.json',
+                    success: function(data) {
+                    $('#loadingDivAI').hide();
+                        
+                        AImoney = data.AI_money;
+                        AIstock1 = data.AI_stock1;
+                        AIstock2 = data.AI_stock2;
+                        AIstock3 = data.AI_stock3;
+                        AIstock4 = data.AI_stock4;
+
+                        document.querySelector('.AImoney').innerHTML ="Current Money: $"+AImoney;
+                        document.querySelector('.AIstock1').innerHTML ="Shares of Stock 1: "+AIstock1;
+                        document.querySelector('.AIstock2').innerHTML ="Shares of Stock 2: "+AIstock2;
+                        document.querySelector('.AIstock3').innerHTML ="Shares of Stock 3: "+AIstock3;
+                        document.querySelector('.AIstock4').innerHTML ="Shares of Stock 4: "+AIstock4;
+                    }
+                });
+            });
+
+            plot1.setData([pushGraph1()]);
+            plot2.setData([pushGraph2()]);
+            plot3.setData([pushGraph3()]);
+            plot4.setData([pushGraph4()]);
+
+            plot1.setupGrid()
+            plot2.setupGrid()
+            plot3.setupGrid()
+            plot4.setupGrid()
+
+            plot1.draw();
+            plot2.draw();
+            plot3.draw();
+            plot4.draw();
+            setTimeout(update, updateInterval);
+        }
+        update();
+        function updateTime() {
+                                var date = new Date();
+
+                        if (date.getSeconds() % 1 == 0) {
+                            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes(): date.getMinutes();
+                            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds(): date.getSeconds();
+                    document.querySelector('.currentTimePST').innerHTML=hours + ":" + minutes + ":" + seconds;}
+            setTimeout(updateTime, 1000);
+        }
+        updateTime();
+    });
+    </script>
+</head>
+<div id ="column1">
+    <div class="card">
+       <div class="demo-container">
+           <div id="placeholder1" class="demo-placeholder"></div>
+       </div>
+       <div class="card-content">
+           <span class="card-title activator grey-text text-darken-4">Stock 1 <i class="mdi-navigation-more-vert right"></i></span>
+           <p>
+                {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy1'))}}
+                {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell1'))}}
+             <!--   <a class="waves-effect waves-light" href="StockTrader/default/sell1">Sell</a> -->
+           </p>
+       </div>
+       <div class="card-reveal">
+           <span class="card-title grey-text text-darken-4">Stock 1<i class="mdi-navigation-close right"></i></span>
+           <br><p>This Stock is the least volatile of the four. Hope it helps get you started!</p>
+       </div>
+    </div>
+</div>
+
+<div id="columnblank"></div>
+
+<div id="column2">
+    <div class="card">
+        <div class="demo-container">
+            <div id="placeholder2" class="demo-placeholder"></div>
+        </div>
+        <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">Stock 2<i class="mdi-navigation-more-vert right"></i></span>
+            <p>
+                {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy2'))}}
+                {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell2'))}}
+            </p>
+        </div>
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Stock 2<i class="mdi-navigation-close right"></i></span>
+            <br><p>This Stock helps you transition to the larger stock trades.</p>
+        </div>
+    </div>
+</div>
+
+<div id="columnblank"></div>
+
+<div id="column3">
+
+    <div class="card">
+        <div class="demo-container">
+            <div id="placeholder3" class="demo-placeholder"></div>
+        </div>
+        <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">Stock 3 <i class="mdi-navigation-more-vert right"></i></span>
+            <p>
+                    {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy3'))}}
+                    {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell3'))}}
+<!--                 <a class="waves-effect waves-light" href="StockTrader/default/buy3">Buy</a>
+                <a class="waves-effect waves-light" href="StockTrader/default/sell3">Sell</a> -->
+            </p>
+        </div>
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Stock 3<i class="mdi-navigation-close right"></i></span>
+            <br><p>This Stock is past midway to the big leagues. </p>
+        </div>
+    </div>
+</div>
+
+<div id="columnblank"></div>
+
+<div id="column4">
+    <div class="card">
+        <div class="demo-container">
+            <div id="placeholder4" class="demo-placeholder"></div>
+        </div>
+        <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">Stock 4 <i class="mdi-navigation-more-vert right"></i></span>
+            <p>
+                    {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy4'))}}
+                    {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell4'))}}
+<!--                 <a class="waves-effect waves-light" href="StockTrader/default/buy4">Buy</a>
+                <a class="waves-effect waves-light" href="StockTrader/default/sell4">Sell</a> -->
+            </p>
+        </div>
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Stock 4<i class="mdi-navigation-close right"></i></span>
+            <br><p align = "justify">This Stock is the most volatile of the four. May cause rags to riches, or riches to rags. Be careful!</p>
+        </div>
+    </div>
+</div>
+
+<div id="bottom1">
+    <div class="card">
+        <div class = "card-panel teal">
+            <span class="white-text">
+                <p>
+                    Current Money: ${{=player_money}} <br>
+                    Shares of Stock 1: {{=stock1}} <br>
+                    Shares of Stock 2: {{=stock2}} <br>
+                    Shares of Stock 3: {{=stock3}} <br>
+                    Shares of Stock 4: {{=stock4}} <br>
+                </p>
+            </span>
+        </div>
+        <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">Player<i class="mdi-navigation-more-vert right"></i></span>
+        </div>
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Player<i class="mdi-navigation-close right"></i></span>
+            <span class="teal-text"><br><p>This card shows your realtime statistics.</p></span>
+            <p>
+                If you would like to start over, click reset. Warning! It cannot be undone once reset.<br>
+                <div align = "center" id="reset" onclick ="loader()">
+                    {{=A('Reset', _class='btn-flat', _href=URL('default', 'reset'))}}
+                    <script>
+                        function loader() {
+                            $('#loadingspin').show();
+                        }
+                    </script>
+                                        <div id = "loadingspin">
+                                                <div class="preloader-wrapper small active">
+                          <div class="spinner-layer spinner-blue">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+
+                          <div class="spinner-layer spinner-red">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+
+                          <div class="spinner-layer spinner-yellow">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+
+                          <div class="spinner-layer spinner-green">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+                        </div>
+                                            </div>
+                </div>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div id="bottomblank"></div>
+
+<div id="bottom2">
+    <div class="card">
+        <div class = "card-panel teal lighten-1">
+            <span class="white-text">
+                    <div align="center" class="currentTimePST"></div>
+                <div align="left" class ="stock1"></div>
+                <div align="left" class ="stock2"></div>
+                <div align="left" class ="stock3"></div>
+                <div align="left" class ="stock4"></div>
+                <p>
+                    <br>
+                    <div id = 'loadingDivStock'>
+                        <div class="preloader-wrapper medium active">
+                            <div class="spinner-layer spinner-white-only">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p>
+            </span>
+        </div>
+        <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">Stock Fluctuations<i class="mdi-navigation-more-vert right"></i></span>
+        </div>
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Stock Fluctuations<i class="mdi-navigation-close right"></i></span>
+            <span class="blue-text"><br><p>This card displays the stock price changes between each update interval. The stock prices and graphs update every 5 seconds, though there is a slight delay due to AJAX.</p></span>
+        </div>
+    </div>
+</div>
+
+<div id="bottomblank"></div>
+
+<div id="bottom3">
+    <div class="card">
+        <div class = "card-panel teal">
+            <span class="white-text">
+                <div align="left" class ="AImoney"></div>
+                <div align="left" class ="AIstock1"></div>
+                <div align="left" class ="AIstock2"></div>
+                <div align="left" class ="AIstock3"></div>
+                <div align="left" class ="AIstock4"></div>
+                <p>
+                    <br>
+                    <div id = 'loadingDivAI'>
+                         <div class="preloader-wrapper medium active">
+                            <div class="spinner-layer spinner-white-only">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </p>
+            </span>
+        </div>
+        <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">Opponent AI<i class="mdi-navigation-more-vert right"></i></span>
+        </div>
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Opponent AI<i class="mdi-navigation-close right"></i></span>
+            <span class="red-text"><br><p>This card shows the opponent AI's statistics, controlled by a simple trading algorithm. It buys and sells shares as it sees fit every 5 seconds.</p></span>
+        </div>
+    </div>
+  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large red">
+      <i class="large mdi-content-add"></i>
+    </a>
+    <ul>
+      <li><a class="btn-floating large red"><i class="large mdi-editor-insert-chart"></i></a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="large mdi-editor-format-quote"></i></a></li>
+      <li><a class="btn-floating green"><i class="large mdi-editor-publish"></i></a></li>
+      <li><a class="btn-floating blue"><i class="large mdi-editor-attach-file"></i></a></li>
+    </ul>
+  </div>
+</div>
