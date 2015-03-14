@@ -67,21 +67,21 @@ def opponentAI():
                     AI_file.money = int(AI_file.money) - int(prev1) #take away money
                     AI_file.update_record(money = AI_file.money, stock1_shares_owned = AI_file.stock1_shares_owned)
 
-                if int(prev2) < 490:
+                if int(prev2) < 490 and int(AI_money) > 10000:
                     g2y = abs(int(prev2) + random.randint(0,5)) #the random raise
                     db.stocks.insert(name = "2", price = g2y)
                     AI_file.stock2_shares_owned = int(AI_file.stock2_shares_owned) + 1 #increase count by 1
                     AI_file.money = int(AI_file.money) - int(prev2) #take away money
                     AI_file.update_record(money = AI_file.money, stock2_shares_owned = AI_file.stock2_shares_owned)                    
 
-                if int(prev3) < 4000:
+                if int(prev3) < 4000 and int(AI_money) > 20000:
                     g3y = abs(int(prev3) + random.randint(0,5)) #the random raise
                     db.stocks.insert(name = "3", price = g3y)
                     AI_file.stock3_shares_owned = int(AI_file.stock3_shares_owned) + 1 #increase count by 1
                     AI_file.money = int(AI_file.money) - int(prev3) #take away money
                     AI_file.update_record(money = AI_file.money, stock3_shares_owned = AI_file.stock3_shares_owned)
 
-                if int(prev4) < 35000:
+                if int(prev4) < 35000 and int(AI_money) > 150000:
                     g4y = abs(int(prev4) + random.randint(0,5)) #the random raise
                     db.stocks.insert(name = "4", price = g4y)
                     AI_file.stock4_shares_owned = int(AI_file.stock4_shares_owned) + 1 #increase count by 1
@@ -107,7 +107,7 @@ def opponentAI():
                 db.stocks.insert(name = "3", price = g3y)
                 AI_file.stock3_shares_owned = int(AI_file.stock3_shares_owned) - 1
                 AI_file.money = int(AI_file.money) + int(prev3) #take add money
-                AI_file.update_record(money = AI_file.money, stock3_shares_owned = AI_file.stock1_shares_owned)
+                AI_file.update_record(money = AI_file.money, stock3_shares_owned = AI_file.stock3_shares_owned)
 
             if int(AI_file.stock4_shares_owned) > 0 and int(prev4) > 50000:
                 g4y = abs(int(prev4) - random.randint(0,5)) #random decline
@@ -172,18 +172,44 @@ def graphJson():
         g4y = 100000
     query=(db.stocks.id>0)
     dbSize = db(query).count()
-    if int(dbSize) > 1460: #if the db is larger than 2 years worth of data, delete the last entry
+    while int(dbSize) > 1460: #if the db is larger than 2 years worth of data, delete the last entry
         db(db.stocks.id.name == "1").select(orderby=db.stocks.id).first().delete_record()
         db(db.stocks.id.name == "2").select(orderby=db.stocks.id).first().delete_record()
         db(db.stocks.id.name == "3").select(orderby=db.stocks.id).first().delete_record()
         db(db.stocks.id.name == "4").select(orderby=db.stocks.id).first().delete_record()
+        dbSize = db(db.stocks.id>0).count()
+        print("deleting?",dbSize)
 
     db.stocks.insert(name = "1", price = g1y)
     db.stocks.insert(name = "2", price = g2y)
     db.stocks.insert(name = "3", price = g3y)
     db.stocks.insert(name = "4", price = g4y)
-    z = strftime("%H:%M:%S", gmtime() )
-    return dict(g1y = g1y, g2y = g2y, g3y = g3y, g4y = g4y, z=z)
+#     z = strftime("%H:%M:%S", gmtime() )
+    return dict(g1y = g1y, g2y = g2y, g3y = g3y, g4y = g4y)
+
+@auth.requires_login()
+def reset():
+    if auth.user_id:
+        AI_file = db(db.AI.user_id == auth.user_id).select(orderby=~db.AI.id).first()
+        row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
+        query=(db.stocks.id>0)
+        dbSize = db(query).count()
+        while int(dbSize) > 0: #if the db is larger than 2 years worth of data, delete the last entry
+            db(db.stocks).select(orderby=db.stocks.id).first().delete_record()
+            dbSize = db(db.stocks.id>0).count()
+            print("deleting?",dbSize)
+        if AI_file is None:
+            print("fatal error")
+        else:
+            AI_file.update_record(money = 10000, stock1_shares_owned = 0, stock2_shares_owned = 0, stock3_shares_owned = 0, stock4_shares_owned = 0)
+
+        if row is None:
+            print("fatal error")
+        else:
+            row.update_record(money = 10000, stock1_shares_owned = 0, stock2_shares_owned = 0, stock3_shares_owned = 0, stock4_shares_owned = 0)    
+    session.flash=T("Reset complete!")
+    redirect(URL('default','index'))
+    return dict()
 
 @auth.requires_login()
 def buy1():

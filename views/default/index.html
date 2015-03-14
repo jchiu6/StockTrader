@@ -10,18 +10,7 @@
         var now1 = new Date().getTime(), now2 = new Date().getTime(), now3 = new Date().getTime(), now4 = new Date().getTime();
         var dataPy1,dataPy2,dataPy3, dataPy4, prevVal1, prevVal2, prevVal3, prevVal4, AImoney, AIstock1, AIstock2, AIstock3, AIstock4;
         var data1 = [], data2 = [], data3 = [], data4 = [];
-        
-        var html = document.getElementsByTagName('html')[0];
-			var removeLoading = function() {
-				// In a production application you would remove the loading class when your
-				// application is initialized and ready to go.  Here we just artificially wait
-				// 3 seconds before removing the class.
-				setTimeout(function() {
-					html.className = html.className.replace(/indeterminate/, '');
-				}, 3000);
-			};
-			removeLoading();
-// Set up the control widget
+
         function pushGraph1() {
             if (data1.length > 0)
             data1.shift();
@@ -328,16 +317,6 @@
 <div id="columnblank"></div>
 
 <div id="column2">
-<!--<h1>Stock 2</h1>
-     <div id="content">
-        <div class="demo-container">
-            <div id="placeholder2" class="demo-placeholder"></div>
-        </div>
-    <p>
-    {{=A('Buy', _class='btn', _href=URL('default', 'buy2'))}}
-    {{=A('Sell', _class='btn', _href=URL('default', 'sell2'))}}
-    </p>
-    </div> -->
     <div class="card">
         <div class="demo-container">
             <div id="placeholder2" class="demo-placeholder"></div>
@@ -345,11 +324,8 @@
         <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">Stock 2<i class="mdi-navigation-more-vert right"></i></span>
             <p>
-<!--                 <a class="waves-effect waves-light btn">Stuff</a> -->
-<!--                 <a class="waves-effect waves-light" href="StockTrader/default/buy2">Buy</a> -->
-                    {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy2'))}}
-                    {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell2'))}}
-<!--                 <a class="waves-effect waves-light" href="/StockTrader/default/sell2">Sell</a> -->
+                {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy2'))}}
+                {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell2'))}}
             </p>
         </div>
         <div class="card-reveal">
@@ -378,7 +354,7 @@
         </div>
         <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">Stock 3<i class="mdi-navigation-close right"></i></span>
-            <p>This Stock is past the midway to the big leagues. </p>
+            <p>This Stock is past midway to the big leagues. </p>
         </div>
     </div>
 </div>
@@ -425,6 +401,10 @@
         <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">Player<i class="mdi-navigation-close right"></i></span>
             <span class="teal-text"><p>This card shows your current statistics and updates as you buy and sell!</p></span>
+            <p>
+                If you would like to reset your progress, click the reset button below. Warning! Once clicked the reset cannot be undone and you must start over again.<br>
+                {{=A('Reset', _class='btn-flat', _href=URL('default', 'reset'))}}
+            </p>
         </div>
     </div>
 </div>

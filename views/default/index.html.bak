@@ -10,18 +10,7 @@
         var now1 = new Date().getTime(), now2 = new Date().getTime(), now3 = new Date().getTime(), now4 = new Date().getTime();
         var dataPy1,dataPy2,dataPy3, dataPy4, prevVal1, prevVal2, prevVal3, prevVal4, AImoney, AIstock1, AIstock2, AIstock3, AIstock4;
         var data1 = [], data2 = [], data3 = [], data4 = [];
-        
-        var html = document.getElementsByTagName('html')[0];
-			var removeLoading = function() {
-				// In a production application you would remove the loading class when your
-				// application is initialized and ready to go.  Here we just artificially wait
-				// 3 seconds before removing the class.
-				setTimeout(function() {
-					html.className = html.className.replace(/indeterminate/, '');
-				}, 3000);
-			};
-			removeLoading();
-// Set up the control widget
+
         function pushGraph1() {
             if (data1.length > 0)
             data1.shift();
@@ -425,6 +414,10 @@
         <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">Player<i class="mdi-navigation-close right"></i></span>
             <span class="teal-text"><p>This card shows your current statistics and updates as you buy and sell!</p></span>
+            <p>
+                If you would like to reset your progress, click the reset button below. Warning! Once clicked the reset cannot be undone and you must start over again.<br>
+                {{=A('Reset', _class='btn-flat', _href=URL('default', 'reset'))}}
+            </p>
         </div>
     </div>
 </div>
@@ -477,7 +470,7 @@
                 <p>
                     <div id = 'loadingDivAI'>
                          <div class="preloader-wrapper medium active">
-                            <div class="spinner-layer spinner-yellow-only">
+                            <div class="spinner-layer spinner-white-only">
                                 <div class="circle-clipper left">
                                     <div class="circle"></div>
                                 </div>
