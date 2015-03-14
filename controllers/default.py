@@ -67,7 +67,7 @@ def opponentAI():
                     AI_file.money = int(AI_file.money) - int(prev1) #take away money
                     AI_file.update_record(money = AI_file.money, stock1_shares_owned = AI_file.stock1_shares_owned)
 
-                if int(prev2) < 490 and int(AI_money) > 10000:
+                if int(prev2) < 490 and int(AI_money) > 5000:
                     g2y = abs(int(prev2) + random.randint(0,5)) #the random raise
                     db.stocks.insert(name = "2", price = g2y)
                     AI_file.stock2_shares_owned = int(AI_file.stock2_shares_owned) + 1 #increase count by 1
@@ -121,7 +121,7 @@ def opponentAI():
             AI_stock2 = AI_file.stock2_shares_owned
             AI_stock3 = AI_file.stock3_shares_owned
             AI_stock4 = AI_file.stock4_shares_owned
-    return dict(AI_money = AI_money, AI_stock1 = AI_stock1, AI_stock2 = AI_stock2, AI_stock3 = AI_stock3, AI_stock4 = AI_stock4)
+    return json.dumps({"AI_money":AI_money, "AI_stock1":AI_stock1,"AI_stock2":AI_stock2,"AI_stock3":AI_stock3,"AI_stock4": AI_stock4})
 
 def profileCreate():
     form = SQLFORM(db.stocktrader)
@@ -185,7 +185,7 @@ def graphJson():
     db.stocks.insert(name = "3", price = g3y)
     db.stocks.insert(name = "4", price = g4y)
     z = strftime("%H:%M:%S", gmtime() )
-    return dict(g1y = g1y, g2y = g2y, g3y = g3y, g4y = g4y, z=z)
+    return json.dumps({'g1y':g1y, "g2y":g2y,"g3y":g3y,"g4y":g4y,"z": z})
 
 @auth.requires_login()
 def reset():

@@ -6,6 +6,7 @@
     <script type="text/javascript">
 
     $(function() {
+        $('#loadingspin').hide();
         var totalPoints = 24, updateInterval = 5000; //milliseconds
         var now1 = new Date().getTime(), now2 = new Date().getTime(), now3 = new Date().getTime(), now4 = new Date().getTime();
         var dataPy1,dataPy2,dataPy3, dataPy4, prevVal1, prevVal2, prevVal3, prevVal4, AImoney, AIstock1, AIstock2, AIstock3, AIstock4, currentTime;
@@ -232,22 +233,22 @@
                     prevVal3 = dataPy3 - prevVal3;
                     prevVal4 = dataPy4 - prevVal4;
 
-                    if(prevVal1>0) document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1+" "+"<span style=\"color:#00695c\">"+"+"+prevVal1+"</span>";
-                    else if(prevVal1<0) document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1 +" " + "<span style=\"color:#ef5350\">" + prevVal1 + "</span>";
-                    else if (prevVal1==0) document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1 + " " + "<span style=\"color:#64b5f6\">" + prevVal1 + "</span>";
-                    else document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1;
-                    if (prevVal2>0) document.querySelector('.stock2').innerHTML ="Stock 2: "+dataPy2+"   "+"<span style=\"color:#00695c\">"+"+"+prevVal2+"</span>";
-                    else if (prevVal2 < 0) document.querySelector('.stock2').innerHTML ="Stock 2: "+dataPy2 + "   " + "<span style=\"color:#ef5350\">" + prevVal2 + "</span>";
-                    else if (prevVal2 == 0) document.querySelector('.stock2').innerHTML ="Stock 2: "+dataPy2 + "   " + "<span style=\"color:#64b5f6\">" + prevVal2 + "</span>";
-                    else document.querySelector('.stock2').innerHTML ="Stock 2: "+dataPy2;
-                    if (prevVal3 > 0) document.querySelector('.stock3').innerHTML ="Stock 3: "+dataPy3+"   "+"<span style=\"color:#00695c\">"+"+"+prevVal3+"</span>";
-                    else if (prevVal3 < 0) document.querySelector('.stock3').innerHTML ="Stock 3: "+dataPy3 + "   " + "<span style=\"color:#ef5350\">" + prevVal3 + "</span>";
-                    else if (prevVal3 == 0) document.querySelector('.stock3').innerHTML ="Stock 3: "+dataPy3 + "   " + "<span style=\"color:#64b5f6\">" + prevVal3 + "</span>";
-                    else document.querySelector('.stock3').innerHTML ="Stock 3: "+dataPy3;
-                    if (prevVal4 > 0) document.querySelector('.stock4').innerHTML ="Stock 4: "+dataPy4+"   "+"<span style=\"color:#00695c\">"+"+"+prevVal4+"</span>";
-                    else if (prevVal4 < 0) document.querySelector('.stock4').innerHTML ="Stock 4: "+dataPy4 + "   " + "<span style=\"color:#ef5350\">" + prevVal4 + "</span>";
-                    else if (prevVal4 == 0) document.querySelector('.stock4').innerHTML ="Stock 4: "+dataPy4 + "   " + "<span style=\"color:#64b5f6\">" + prevVal4 + "</span>";
-                    else document.querySelector('.stock4').innerHTML ="Stock 4: "+dataPy4;
+                    if(prevVal1>0) document.querySelector('.stock1').innerHTML ="Stock 1: $"+dataPy1+" "+"<span style=\"color:#00695c\">"+"+"+prevVal1+"</span>";
+                    else if(prevVal1<0) document.querySelector('.stock1').innerHTML ="Stock 1: $"+dataPy1 +" " + "<span style=\"color:#ef5350\">" + prevVal1 + "</span>";
+                    else if (prevVal1==0) document.querySelector('.stock1').innerHTML ="Stock 1: $"+dataPy1 + " " + "<span style=\"color:#64b5f6\">" + prevVal1 + "</span>";
+                    else document.querySelector('.stock1').innerHTML ="Stock 1: $"+dataPy1;
+                    if (prevVal2>0) document.querySelector('.stock2').innerHTML ="Stock 2: $"+dataPy2+"   "+"<span style=\"color:#00695c\">"+"+"+prevVal2+"</span>";
+                    else if (prevVal2 < 0) document.querySelector('.stock2').innerHTML ="Stock 2: $"+dataPy2 + "   " + "<span style=\"color:#ef5350\">" + prevVal2 + "</span>";
+                    else if (prevVal2 == 0) document.querySelector('.stock2').innerHTML ="Stock 2: $"+dataPy2 + "   " + "<span style=\"color:#64b5f6\">" + prevVal2 + "</span>";
+                    else document.querySelector('.stock2').innerHTML ="Stock 2: $"+dataPy2;
+                    if (prevVal3 > 0) document.querySelector('.stock3').innerHTML ="Stock 3: $"+dataPy3+"   "+"<span style=\"color:#00695c\">"+"+"+prevVal3+"</span>";
+                    else if (prevVal3 < 0) document.querySelector('.stock3').innerHTML ="Stock 3: $"+dataPy3 + "   " + "<span style=\"color:#ef5350\">" + prevVal3 + "</span>";
+                    else if (prevVal3 == 0) document.querySelector('.stock3').innerHTML ="Stock 3: $"+dataPy3 + "   " + "<span style=\"color:#64b5f6\">" + prevVal3 + "</span>";
+                    else document.querySelector('.stock3').innerHTML ="Stock 3: $"+dataPy3;
+                    if (prevVal4 > 0) document.querySelector('.stock4').innerHTML ="Stock 4: $"+dataPy4+"   "+"<span style=\"color:#00695c\">"+"+"+prevVal4+"</span>";
+                    else if (prevVal4 < 0) document.querySelector('.stock4').innerHTML ="Stock 4: $"+dataPy4 + "   " + "<span style=\"color:#ef5350\">" + prevVal4 + "</span>";
+                    else if (prevVal4 == 0) document.querySelector('.stock4').innerHTML ="Stock 4: $"+dataPy4 + "   " + "<span style=\"color:#64b5f6\">" + prevVal4 + "</span>";
+                    else document.querySelector('.stock4').innerHTML ="Stock 4: $"+dataPy4;
 
                     }
                 });
@@ -258,6 +259,7 @@
                     url: '/StockTrader/default/opponentAI.json',
                     success: function(data) {
                     $('#loadingDivAI').hide();
+                        
                         AImoney = data.AI_money;
                         AIstock1 = data.AI_stock1;
                         AIstock2 = data.AI_stock2;
@@ -412,10 +414,58 @@
             <span class="card-title grey-text text-darken-4">Player<i class="mdi-navigation-close right"></i></span>
             <span class="teal-text"><br><p>This card shows your current statistics and updates as you buy and sell!</p></span>
             <p>
-                If you would like to reset your progress, click the reset button below. Warning! Once clicked the reset cannot be undone and you must start over again.<br>
-                <div align = "center">
+                If you would like to start over, click reset. Warning! It cannot be undone once reset.<br>
+                <div align = "center" id="reset" onclick ="loader()">
                     {{=A('Reset', _class='btn-flat', _href=URL('default', 'reset'))}}
-            </div>
+                    <script>
+                        function loader() {
+                            $('#loadingspin').show();
+                        }
+                    </script>
+                                        <div id = "loadingspin">
+                                                <div class="preloader-wrapper small active">
+                          <div class="spinner-layer spinner-blue">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+
+                          <div class="spinner-layer spinner-red">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+
+                          <div class="spinner-layer spinner-yellow">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+
+                          <div class="spinner-layer spinner-green">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+                        </div>
+                                            </div>
+                </div>
             </p>
         </div>
     </div>
@@ -425,7 +475,7 @@
 
 <div id="bottom2">
     <div class="card">
-        <div class = "card-panel teal lighten-1
+        <div class = "card-panel teal lighten-1">
             <span class="white-text">
                     <div align="center" class="currentTimePST"></div>
                 <div align="left" class ="stock1"></div>
