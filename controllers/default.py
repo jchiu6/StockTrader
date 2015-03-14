@@ -154,7 +154,7 @@ def graphJson():
     g1y = abs(int(prev1) + random.randint(0,7) - 5)
     g2y = abs(int(prev2) + random.randint(0,100) -50)
     g3y = abs(int(prev3) + random.randint(0,1000) -random.randint(0,625))
-    g4y = abs(int(prev4) + random.randint(0,15000) -random.randint(0,7500))
+    g4y = abs(int(prev4) + random.randint(0,10000) -random.randint(0,7500))
     volatile = random.randint(0,100)
 
     if(volatile > 40):
@@ -172,7 +172,7 @@ def graphJson():
         g4y = 100000
     query=(db.stocks.id>0)
     dbSize = db(query).count()
-    while int(dbSize) > 1460: #if the db is larger than 2 years worth of data, delete the last entry
+    while int(dbSize) > 730: #if the db is larger than 0.5 years worth of data, delete the last entry
         db(db.stocks.id.name == "1").select(orderby=db.stocks.id).first().delete_record()
         db(db.stocks.id.name == "2").select(orderby=db.stocks.id).first().delete_record()
         db(db.stocks.id.name == "3").select(orderby=db.stocks.id).first().delete_record()
@@ -184,8 +184,8 @@ def graphJson():
     db.stocks.insert(name = "2", price = g2y)
     db.stocks.insert(name = "3", price = g3y)
     db.stocks.insert(name = "4", price = g4y)
-#     z = strftime("%H:%M:%S", gmtime() )
-    return dict(g1y = g1y, g2y = g2y, g3y = g3y, g4y = g4y)
+    z = strftime("%H:%M:%S", gmtime() )
+    return dict(g1y = g1y, g2y = g2y, g3y = g3y, g4y = g4y, z=z)
 
 @auth.requires_login()
 def reset():
@@ -197,6 +197,7 @@ def reset():
         while int(dbSize) > 0: #if the db is larger than 2 years worth of data, delete the last entry
             db(db.stocks).select(orderby=db.stocks.id).first().delete_record()
             dbSize = db(db.stocks.id>0).count()
+            session.flash = T("Clearing Database, please hold on")
             print("deleting?",dbSize)
         if AI_file is None:
             print("fatal error")

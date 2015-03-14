@@ -8,7 +8,7 @@
     $(function() {
         var totalPoints = 24, updateInterval = 5000; //milliseconds
         var now1 = new Date().getTime(), now2 = new Date().getTime(), now3 = new Date().getTime(), now4 = new Date().getTime();
-        var dataPy1,dataPy2,dataPy3, dataPy4, prevVal1, prevVal2, prevVal3, prevVal4, AImoney, AIstock1, AIstock2, AIstock3, AIstock4;
+        var dataPy1,dataPy2,dataPy3, dataPy4, prevVal1, prevVal2, prevVal3, prevVal4, AImoney, AIstock1, AIstock2, AIstock3, AIstock4, currentTime;
         var data1 = [], data2 = [], data3 = [], data4 = [];
 
         function pushGraph1() {
@@ -129,7 +129,7 @@
                             var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
                             var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes()-2 : date.getMinutes()-2;
                             var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds(): date.getSeconds();
-
+                            
                             return hours + ":" + minutes + ":" + seconds;
                         } else {
                             return "";
@@ -232,9 +232,9 @@
                     prevVal3 = dataPy3 - prevVal3;
                     prevVal4 = dataPy4 - prevVal4;
 
-                    if(prevVal1>0) document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1+"   "+"<span style=\"color:#00695c\">"+"+"+prevVal1+"</span>";
-                    else if(prevVal1<0) document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1 + "   " + "<span style=\"color:#ef5350\">" + prevVal1 + "</span>";
-                    else if (prevVal1==0) document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1 + "   " + "<span style=\"color:#64b5f6\">" + prevVal1 + "</span>";
+                    if(prevVal1>0) document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1+" "+"<span style=\"color:#00695c\">"+"+"+prevVal1+"</span>";
+                    else if(prevVal1<0) document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1 +" " + "<span style=\"color:#ef5350\">" + prevVal1 + "</span>";
+                    else if (prevVal1==0) document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1 + " " + "<span style=\"color:#64b5f6\">" + prevVal1 + "</span>";
                     else document.querySelector('.stock1').innerHTML ="Stock 1: "+dataPy1;
                     if (prevVal2>0) document.querySelector('.stock2').innerHTML ="Stock 2: "+dataPy2+"   "+"<span style=\"color:#00695c\">"+"+"+prevVal2+"</span>";
                     else if (prevVal2 < 0) document.querySelector('.stock2').innerHTML ="Stock 2: "+dataPy2 + "   " + "<span style=\"color:#ef5350\">" + prevVal2 + "</span>";
@@ -290,10 +290,20 @@
             setTimeout(update, updateInterval);
         }
         update();
+        function updateTime() {
+                                var date = new Date();
+
+                        if (date.getSeconds() % 1 == 0) {
+                            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes(): date.getMinutes();
+                            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds(): date.getSeconds();
+                    document.querySelector('.currentTimePST').innerHTML=hours + ":" + minutes + ":" + seconds;}
+            setTimeout(updateTime, 1000);
+        }
+        updateTime();
     });
     </script>
 </head>
-
 <div id ="column1">
     <div class="card">
        <div class="demo-container">
@@ -309,7 +319,7 @@
        </div>
        <div class="card-reveal">
            <span class="card-title grey-text text-darken-4">Stock 1<i class="mdi-navigation-close right"></i></span>
-           <p>This Stock is the least volatile of the four. Hope it helps get you started!</p>
+           <br><p>This Stock is the least volatile of the four. Hope it helps get you started!</p>
        </div>
     </div>
 </div>
@@ -330,7 +340,7 @@
         </div>
         <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">Stock 2<i class="mdi-navigation-close right"></i></span>
-            <p>This Stock helps you transition to the larger stock trades.</p>
+            <br><p>This Stock helps you transition to the larger stock trades.</p>
         </div>
     </div>
 </div>
@@ -354,7 +364,7 @@
         </div>
         <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">Stock 3<i class="mdi-navigation-close right"></i></span>
-            <p>This Stock is past midway to the big leagues. </p>
+            <br><p>This Stock is past midway to the big leagues. </p>
         </div>
     </div>
 </div>
@@ -377,7 +387,7 @@
         </div>
         <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">Stock 4<i class="mdi-navigation-close right"></i></span>
-            <p>This Stock is the most volatile of the four. May cause rags to riches, or riches to rags. Be careful!</p>
+            <br><p align = "justify">This Stock is the most volatile of the four. May cause rags to riches, or riches to rags. Be careful!</p>
         </div>
     </div>
 </div>
@@ -400,10 +410,12 @@
         </div>
         <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">Player<i class="mdi-navigation-close right"></i></span>
-            <span class="teal-text"><p>This card shows your current statistics and updates as you buy and sell!</p></span>
+            <span class="teal-text"><br><p>This card shows your current statistics and updates as you buy and sell!</p></span>
             <p>
                 If you would like to reset your progress, click the reset button below. Warning! Once clicked the reset cannot be undone and you must start over again.<br>
-                {{=A('Reset', _class='btn-flat', _href=URL('default', 'reset'))}}
+                <div align = "center">
+                    {{=A('Reset', _class='btn-flat', _href=URL('default', 'reset'))}}
+            </div>
             </p>
         </div>
     </div>
@@ -413,9 +425,15 @@
 
 <div id="bottom2">
     <div class="card">
-        <div class = "card-panel teal">
+        <div class = "card-panel teal lighten-1">
             <span class="white-text">
+                    <div align="center" class="currentTimePST"></div>
+                <div align="left" class ="stock1"></div>
+                <div align="left" class ="stock2"></div>
+                <div align="left" class ="stock3"></div>
+                <div align="left" class ="stock4"></div>
                 <p>
+                    <br>
                     <div id = 'loadingDivStock'>
                         <div class="preloader-wrapper medium active">
                             <div class="spinner-layer spinner-white-only">
@@ -431,10 +449,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class ="stock1"></div>
-                    <div class ="stock2"></div>
-                    <div class ="stock3"></div>
-                    <div class ="stock4"></div>
                 </p>
             </span>
         </div>
@@ -443,7 +457,7 @@
         </div>
         <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">Stock Fluctuations<i class="mdi-navigation-close right"></i></span>
-            <span class="blue-text"><p>This card displays the stock price changes between each update interval.</p></span>
+            <span class="blue-text"><br><p>This card displays the stock price changes between each update interval. The stock prices and graphs update every 5 seconds, though there is a slight delay due to AJAX.</p></span>
         </div>
     </div>
 </div>
@@ -454,7 +468,13 @@
     <div class="card">
         <div class = "card-panel teal">
             <span class="white-text">
+                <div align="left" class ="AImoney"></div>
+                <div align="left" class ="AIstock1"></div>
+                <div align="left" class ="AIstock2"></div>
+                <div align="left" class ="AIstock3"></div>
+                <div align="left" class ="AIstock4"></div>
                 <p>
+                    <br>
                     <div id = 'loadingDivAI'>
                          <div class="preloader-wrapper medium active">
                             <div class="spinner-layer spinner-white-only">
@@ -470,11 +490,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class ="AImoney"></div>
-                    <div class ="AIstock1"></div>
-                    <div class ="AIstock2"></div>
-                    <div class ="AIstock3"></div>
-                    <div class ="AIstock4"></div>
+
                 </p>
             </span>
         </div>
@@ -483,7 +499,7 @@
         </div>
         <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">Opponent AI<i class="mdi-navigation-close right"></i></span>
-            <span class="red-text"><p>This card shows the opponent AI's statistics, controlled by a simple trading algorithm. </p></span>
+            <span class="red-text"><br><p>This card shows the opponent AI's statistics, controlled by a simple trading algorithm. It buys and sells shares as it sees fit every 5 seconds.</p></span>
         </div>
     </div>
 </div>

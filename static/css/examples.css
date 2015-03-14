@@ -1,4 +1,6 @@
-* {	padding: 0; margin: 0; vertical-align: top; 
+* {	padding: 0; margin: 0; vertical-align: top; margin-top: 0;
+    font-family: 'Roboto', sans-serif;
+/*     color: #e0f2f1; */
 }
 
 body {
@@ -93,20 +95,17 @@ input[type=checkbox] {
 }
 
 #header {
+    font-family: 'Roboto', sans-serif;
     background-color:#00796b;
     color:white;
     width: auto;
     min-width:1100px:
     text-align:center;
-/*     left: 0;
-    right: 0;
-    margin-left:0; */
-
 }
 #column1 {
      font-family: 'Roboto', sans-serif;
 /*     color: #ee6e73; */
-    line-height:25px;
+     line-height:17px; 
     background-color: #e0f2f1;
 /*     background-color:#eeeeee; */
     height:410px;
@@ -121,13 +120,13 @@ input[type=checkbox] {
 }
 #column2 {
     font-family: 'Roboto', sans-serif;
-    line-height:30px;
+    line-height:17px; 
 /*     background-color:#eeeeee; */
-     background-color: #e0f2f1;
+    background-color: #e0f2f1;
     height:410px;
     width:270px;
     float:left;
-     padding:5px;
+    padding:5px;
 /*    box-shadow: 0 3px 10px rgba(0,0,0,0.45);
 	-o-box-shadow: 0 3px 10px rgba(0,0,0,0.4);
 	-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.4);
@@ -136,9 +135,9 @@ input[type=checkbox] {
 }
 #column3 {
     font-family: 'Roboto', sans-serif;
-    line-height:30px;
+    line-height:17px; 
 /*     background-color:#eeeeee; */
-     background-color: #e0f2f1;
+    background-color: #e0f2f1;
     height:410px;
     width:270px;
     float:left;
@@ -151,7 +150,7 @@ input[type=checkbox] {
 }
 #column4 {
     font-family: 'Roboto', sans-serif;
-    line-height:30px;
+    line-height:17px; 
 /*     background-color:#eeeeee; */
     background-color: #e0f2f1;
     height:410px;
