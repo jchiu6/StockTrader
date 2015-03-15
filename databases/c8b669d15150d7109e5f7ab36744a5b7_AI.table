@@ -126,7 +126,7 @@ sg9
 I00
 sg10
 g15
-ssS'id'
+ssS'date_posted'
 p38
 (dp39
 g4
@@ -134,14 +134,14 @@ I512
 sg5
 I00
 sg6
-I1
+I4
 sg7
-S'INTEGER PRIMARY KEY AUTOINCREMENT'
+S'TIMESTAMP'
 p40
 sg9
 I00
 sg10
-S'id'
+S'datetime'
 p41
 ssS'stock3_shares_owned'
 p42
@@ -159,7 +159,7 @@ sg9
 I00
 sg10
 g15
-ssS'date_posted'
+ssS'id'
 p45
 (dp46
 g4
@@ -167,13 +167,13 @@ I512
 sg5
 I00
 sg6
-I4
+I1
 sg7
-S'TIMESTAMP'
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
 p47
 sg9
 I00
 sg10
-S'datetime'
+S'id'
 p48
 ss.

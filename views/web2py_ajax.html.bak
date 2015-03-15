@@ -35,4 +35,3 @@ response.files.insert(17,URL('static','js/init.js'))
 response.include_meta()
 response.include_files()
 }}
-response.files.insert(17,URL('static','js/init.js'))
