@@ -608,20 +608,25 @@
   <a class="waves-effect waves-light btn modal-trigger" style="margin-bottom:100px" href="#modal1">Tutorial</a>
 
   <!-- Modal Structure -->
-  <div id="modal1" class="modal" style="background-color: #eee; width:700px;left:50%;margin-left:-350px">
+  <div id="modal1" class="modal modal-fixed-footer" style="background-color: #eee; width:700px;left:50%;margin-left:-350px">
     <div class="modal-content">
       <h4 style="font-weight:300;font-size: 2.28rem;">Tutorial</h4>
       <span style="color: rgba(0, 0, 0, 0.71);"><br><p>Welcome to the StockTrader tutorial!<br><br>
-                            Step 1: At the top right-hand corner, there is a Log In Dropdown Menu<br>
-                            Step 2: Click the Dropdown Menu and click Log In<br>
-                            Step 3: The website will take you to a Login page.<br>
-                            Step 4: If you have not registered, please put in your credentials.<br>
-                            Step 5: After you have registered, the game will start. <br>
-                            Step 6: The goal of the game is to beat the opponent AI by making more than $500,000 <br>
-                            Step 7: There are 4 different stocks: Stock 1, Stock 2, Stock 3, and Stock 4. <br>
-                            Step 8: You can purchase any of these Stocks if you have enough money. <br>
-                            Step 9: Pay attention to the Stock Flunctations to ensure the Stock prices are not too high or too low. <br>
-                            Step 10: We hope you enjoy our StockTrader Simulation! <br>
+                            Step 1: If you haven't already done so, please log in via the button in the top right corner.<br>
+                            Step 2: Please register if you aren't, as we need users to log in to save and resume their simulations.<br>
+                            Step 3: After logging in, the simulation will start immediately! <br>
+                            Step 4: Starting with $10,000, the goal is to make $500,000 before the opponent AI.<br>
+                            Step 5: You can buy and sell the 4 different stocks, be wary of the varying volatility and price caps!<br>
+          
+                            <br>Tips and Tricks:<br>
+                            You can purchase any of these shares of stock if you have enough money, and you are allowed to go negative once. That is to say that you can buy a stock at a higher price than your current cash pool, but once it is below zero, you cannot attempt to purchase anymore shares until you have sold enough of your current ones to make it back into the positive region. This also applies to the AI.<br><br>
+                            Pay attention to the Stock Flunctations card to watch how the prices of each stock change. The first number indicates the current stock value, and the second number is the difference between the current value and the previous value. We have also included a simple colour scheme to help identify which stocks are rising or falling (or staying the same! Red for decreasing, green for increasing and blue for no change). Be clever about your choice of purchases, the age old buy low, sell high strategy may not be a bad idea until you figure out a more advanced technique!<br><br>
+                            The graphs, stock prices and AI all update at a 5 second interval, so use this to your advantage! The graphs load in from the right, so it may take a while (2 minutes to be exact) for the graph to flow from right to left. The newest data flows in from the right, at a very slight delay to the stock prices card due to ajax. You can compare the data flow by comparing the time axis with the clock and judge the delay from there.<br>
+                            <br>The stock prices fluctuate due to an altered binomal walk algorithm with extra volatility factors thrown in for the larger stocks. Keep in mind that buying shares positively influences the stock price (abit randomly to reduce gaming the system), and vice versa for selling. You don't have to wait for the AI or stock prices to load numbers to be able to buy or sell, but it would be wise to do so!<br><br>
+                            We hope you enjoy our StockTrader Simulation! <br><br>
+          "I never attempt to make money on the stock market. I buy on the assumption that they could close the market the next day and not reopen it for five years."
+<br><br>
+Warren Buffett
                             </p></span>
     </div>
     <div class="modal-footer">

@@ -72,21 +72,21 @@ def opponentAI():
                     AI_file.update_record(money = AI_file.money, stock1_shares_owned = AI_file.stock1_shares_owned)
 
                 if int(prev2) < 490 and int(AI_money) > 5000:
-                    g2y = abs(int(prev2) + random.randint(0,5)) #the random raise
+                    g2y = abs(int(prev2) + random.randint(0,12)) #the random raise
                     db.stocks.insert(name = "2", price = g2y)
                     AI_file.stock2_shares_owned = int(AI_file.stock2_shares_owned) + 1 #increase count by 1
                     AI_file.money = int(AI_file.money) - int(prev2) #take away money
                     AI_file.update_record(money = AI_file.money, stock2_shares_owned = AI_file.stock2_shares_owned)                    
 
                 if int(prev3) < 4000 and int(AI_money) > 20000:
-                    g3y = abs(int(prev3) + random.randint(0,5)) #the random raise
+                    g3y = abs(int(prev3) + random.randint(0,25)) #the random raise
                     db.stocks.insert(name = "3", price = g3y)
                     AI_file.stock3_shares_owned = int(AI_file.stock3_shares_owned) + 1 #increase count by 1
                     AI_file.money = int(AI_file.money) - int(prev3) #take away money
                     AI_file.update_record(money = AI_file.money, stock3_shares_owned = AI_file.stock3_shares_owned)
 
                 if int(prev4) < 35000 and int(AI_money) > 150000:
-                    g4y = abs(int(prev4) + random.randint(0,5)) #the random raise
+                    g4y = abs(int(prev4) + random.randint(0,50)) #the random raise
                     db.stocks.insert(name = "4", price = g4y)
                     AI_file.stock4_shares_owned = int(AI_file.stock4_shares_owned) + 1 #increase count by 1
                     AI_file.money = int(AI_file.money) - int(prev4) #take away money
@@ -100,21 +100,21 @@ def opponentAI():
                 AI_file.update_record(money = AI_file.money, stock1_shares_owned = AI_file.stock1_shares_owned)
 
             if int(AI_file.stock2_shares_owned) > 0 and int(prev2) > 600:
-                g2y = abs(int(prev2) - random.randint(0,5)) #random decline
+                g2y = abs(int(prev2) - random.randint(0,12)) #random decline
                 db.stocks.insert(name = "2", price = g2y)
                 AI_file.stock2_shares_owned = int(AI_file.stock2_shares_owned) - 1
                 AI_file.money = int(AI_file.money) + int(prev2) #take add money
                 AI_file.update_record(money = AI_file.money, stock2_shares_owned = AI_file.stock2_shares_owned)
 
             if int(AI_file.stock3_shares_owned) > 0 and int(prev3) > 5100:
-                g3y = abs(int(prev3) - random.randint(0,5)) #random decline
+                g3y = abs(int(prev3) - random.randint(0,25)) #random decline
                 db.stocks.insert(name = "3", price = g3y)
                 AI_file.stock3_shares_owned = int(AI_file.stock3_shares_owned) - 1
                 AI_file.money = int(AI_file.money) + int(prev3) #take add money
                 AI_file.update_record(money = AI_file.money, stock3_shares_owned = AI_file.stock3_shares_owned)
 
             if int(AI_file.stock4_shares_owned) > 0 and int(prev4) > 50000:
-                g4y = abs(int(prev4) - random.randint(0,5)) #random decline
+                g4y = abs(int(prev4) - random.randint(0,50)) #random decline
                 db.stocks.insert(name = "4", price = g4y)
                 AI_file.stock4_shares_owned = int(AI_file.stock4_shares_owned) - 1
                 AI_file.money = int(AI_file.money) + int(prev4) #take add money
@@ -281,7 +281,7 @@ def buy2():
     
     if int(row.money) > 0:
         prev2 = prevdb2.price
-        g2y = abs(int(prev2) + random.randint(0,5))
+        g2y = abs(int(prev2) + random.randint(0,12))
         db.stocks.insert(name = "2", price = g2y)
         #need check for if player has enough money
 
@@ -303,7 +303,7 @@ def sell2():
     
     if int(row.stock2_shares_owned) > 0:
         prev2 = prevdb2.price
-        g2y = abs(int(prev2) - random.randint(0,5))
+        g2y = abs(int(prev2) - random.randint(0,12))
         db.stocks.insert(name = "2", price = g2y)
 
         #need check if user owns any shares in stock
@@ -328,7 +328,7 @@ def buy3():
     
     if int(row.money) > 0:
         prev3 = prevdb3.price
-        g3y = abs(int(prev3) + random.randint(0,5))
+        g3y = abs(int(prev3) + random.randint(0,25))
         db.stocks.insert(name = "3", price = g3y)
         #need check for if player has enough money
 
@@ -350,7 +350,7 @@ def sell3():
     
     if int(row.stock3_shares_owned) > 0:
         prev3 = prevdb3.price
-        g3y = abs(int(prev3) - random.randint(0,5))
+        g3y = abs(int(prev3) - random.randint(0,25))
         db.stocks.insert(name = "3", price = g3y)
 
         #need check if user owns any shares in stock
@@ -375,7 +375,7 @@ def buy4():
     
     if int(row.money) > 0:
         prev4 = prevdb4.price
-        g4y = abs(int(prev4) + random.randint(0,5))
+        g4y = abs(int(prev4) + random.randint(0,50))
         db.stocks.insert(name = "4", price = g4y)
         #need check for if player has enough money
 
@@ -397,7 +397,7 @@ def sell4():
     
     if int(row.stock4_shares_owned) > 0:
         prev4 = prevdb4.price
-        g4y = abs(int(prev4) - random.randint(0,5))
+        g4y = abs(int(prev4) - random.randint(0,50))
         db.stocks.insert(name = "4", price = g4y)
 
         #need check if user owns any shares in stock
