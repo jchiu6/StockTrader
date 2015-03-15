@@ -230,3 +230,16 @@ input[type=checkbox] {
 .legend table {
 	border-spacing: 5px;
 }
+
+#hovering {
+    position:fixed;
+    height: 1000px;
+    width: 800px;
+    margin: auto;
+    margin-left: -400px;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    top: 200px;
+    left: 50%;
+}

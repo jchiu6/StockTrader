@@ -120,13 +120,13 @@ input[type=checkbox] {
 }
 #column2 {
     font-family: 'Roboto', sans-serif;
-    line-height:30px;
+    line-height:17px; 
 /*     background-color:#eeeeee; */
-     background-color: #e0f2f1;
+    background-color: #e0f2f1;
     height:410px;
     width:270px;
     float:left;
-     padding:5px;
+    padding:5px;
 /*    box-shadow: 0 3px 10px rgba(0,0,0,0.45);
 	-o-box-shadow: 0 3px 10px rgba(0,0,0,0.4);
 	-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.4);
@@ -135,9 +135,9 @@ input[type=checkbox] {
 }
 #column3 {
     font-family: 'Roboto', sans-serif;
-    line-height:30px;
+    line-height:17px; 
 /*     background-color:#eeeeee; */
-     background-color: #e0f2f1;
+    background-color: #e0f2f1;
     height:410px;
     width:270px;
     float:left;
@@ -150,7 +150,7 @@ input[type=checkbox] {
 }
 #column4 {
     font-family: 'Roboto', sans-serif;
-    line-height:30px;
+    line-height:17px; 
 /*     background-color:#eeeeee; */
     background-color: #e0f2f1;
     height:410px;
@@ -229,4 +229,17 @@ input[type=checkbox] {
 
 .legend table {
 	border-spacing: 5px;
+}
+
+#hovering {
+    position:fixed;
+    height: 1000px;
+    width: 800px;
+    margin: auto;
+    margin-left: -400px;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    top: 200px;
+    left: 50%;
 }

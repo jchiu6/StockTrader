@@ -25,6 +25,7 @@ def index():
     stock2 = 0
     stock3 = 0
     stock4 = 0
+    PlayerWin = ""
     if auth.user_id:
         #session.flash=T("user is logged in")
         player_file = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
@@ -36,8 +37,10 @@ def index():
             stock2 = player_file.stock2_shares_owned
             stock3 = player_file.stock3_shares_owned
             stock4 = player_file.stock4_shares_owned
+            if int(player_money) > 500000:
+                PlayerWin = "Player has won!"
 
-    return dict(player_money = player_money, stock1 = stock1, stock2 = stock2, stock3 = stock3, stock4 = stock4)
+    return dict(player_money = player_money, stock1 = stock1, stock2 = stock2, stock3 = stock3, stock4 = stock4, PlayerWin = PlayerWin)
 
 def opponentAI():
     AI_money = 0
@@ -121,12 +124,15 @@ def opponentAI():
             AI_stock2 = AI_file.stock2_shares_owned
             AI_stock3 = AI_file.stock3_shares_owned
             AI_stock4 = AI_file.stock4_shares_owned
-    return json.dumps({"AI_money":AI_money, "AI_stock1":AI_stock1,"AI_stock2":AI_stock2,"AI_stock3":AI_stock3,"AI_stock4": AI_stock4})
+            AIWin = ""
+            if int(AI_money) > 500000: #AI Win Condition
+                AIWin = "AI has won!"
+    return json.dumps({"AI_money":AI_money, "AI_stock1":AI_stock1,"AI_stock2":AI_stock2,"AI_stock3":AI_stock3,"AI_stock4": AI_stock4, "AIWin":AIWin})
 
 def profileCreate():
     form = SQLFORM(db.stocktrader)
     if form.process().accepted:
-        db.AI.insert(name = auth.user.first_name+"AI")
+        db.AI.insert(name = auth.user.first_name+"AI") #inserts AI into database
         redirect(URL('default','index'))
     return dict(form = form)
 
@@ -164,8 +170,12 @@ def graphJson():
 
         if(volatile > 40 and g3y > 0):
             g3y = g3y - random.randint(0,500)
+            if(g3y < 0):
+                g3y = 0
         if(volatile > 30 and g4y > 0):
             g4y = g4y - random.randint(0,5000)
+            if(g4y < 0):
+                g4y = 0
 
         if g1y > 100:
             g1y = 100
