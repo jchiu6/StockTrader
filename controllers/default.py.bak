@@ -37,7 +37,7 @@ def index():
             stock2 = player_file.stock2_shares_owned
             stock3 = player_file.stock3_shares_owned
             stock4 = player_file.stock4_shares_owned
-            if int(player_money) < 500000:
+            if int(player_money) > 500000:
                 PlayerWin = "Player has won!"
 
     return dict(player_money = player_money, stock1 = stock1, stock2 = stock2, stock3 = stock3, stock4 = stock4, PlayerWin = PlayerWin)
@@ -48,6 +48,7 @@ def opponentAI():
     AI_stock2 = 0
     AI_stock3 = 0
     AI_stock4 = 0
+    AIWin = ""
     if auth.user_id:
         AI_file = db(db.AI.user_id == auth.user_id).select(orderby=~db.AI.id).first()
         if AI_file is None:
@@ -124,7 +125,6 @@ def opponentAI():
             AI_stock2 = AI_file.stock2_shares_owned
             AI_stock3 = AI_file.stock3_shares_owned
             AI_stock4 = AI_file.stock4_shares_owned
-            AIWin = ""
             if int(AI_money) > 500000: #AI Win Condition
                 AIWin = "AI has won!"
     return json.dumps({"AI_money":AI_money, "AI_stock1":AI_stock1,"AI_stock2":AI_stock2,"AI_stock3":AI_stock3,"AI_stock4": AI_stock4, "AIWin":AIWin})
