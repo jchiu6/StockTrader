@@ -580,7 +580,18 @@
                     <div class="card-content">
 
                         <span class="card-title grey-text text-darken-4">Tutorial<i onclick="exitButton()" class="mdi-navigation-close right"></i></span>
-                        <span class="blue-text"><br><p>Welcome to the StockTrader tutorial! </p></span>
+                        <span class="blue-text"><br><p>Welcome to the StockTrader tutorial!<br><br>
+                            Step 1: At the top right-hand corner, there is a Log In Dropdown Menu<br>
+                            Step 2: Click the Dropdown Menu and click Log In<br>
+                            Step 3: The website will take you to a Login page.<br>
+                            Step 4: If you have not registered, please put in your credentials.<br>
+                            Step 5: After you have registered, the game will start. <br>
+                            Step 6: The goal of the game is to beat the opponent AI by making more than $500,000 <br>
+                            Step 7: There are 4 different stocks: Stock 1, Stock 2, Stock 3, and Stock 4. <br>
+                            Step 8: You can purchase any of these Stocks if you have enough money. <br>
+                            Step 9: Pay attention to the Stock Flunctations to ensure the Stock prices are not too high or too low. <br>
+                            Step 10: We hope you enjoy our StockTrader Simulation! <br>
+                            </p></span>
                      <script>
                         function exitButton() {
                             $('#hovering').hide();
