@@ -125,7 +125,7 @@ def opponentAI():
             AI_stock2 = AI_file.stock2_shares_owned
             AI_stock3 = AI_file.stock3_shares_owned
             AI_stock4 = AI_file.stock4_shares_owned
-            if int(AI_money) > 500000: #AI Win Condition
+            if int(AI_money) > 5000: #AI Win Condition
                 AIWin = "AI has won!"
     return json.dumps({"AI_money":AI_money, "AI_stock1":AI_stock1,"AI_stock2":AI_stock2,"AI_stock3":AI_stock3,"AI_stock4": AI_stock4, "AIWin":AIWin})
 
