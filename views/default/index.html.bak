@@ -281,6 +281,24 @@
                     }
                 });
             });
+            
+            $(function() {
+                $("#selectattribute").change(function() {
+                    if ($(this).val() == "1") {
+                        this.val = 1
+                        console.log(this.val);
+                        alert('Handler for .change() called.');
+                    }
+                    if ($(this).val() == "2") {
+                        this.val = 2
+                        console.log(this.val);
+                    }
+                });
+                $("#selectattribute").keyup(function() {
+                    this.blur();
+                    this.focus();
+                });
+            });
 
             plot1.setData([pushGraph1()]);
             plot2.setData([pushGraph2()]);
@@ -328,7 +346,7 @@
        <div class="card-content" style = "margin-top:-45px">
            <span class="card-title activator grey-text text-darken-4">Stock 1 <i class="mdi-navigation-more-vert right"></i></span>
            <p>
-               <select>
+              <select id = "selectattribute">
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -566,48 +584,10 @@
     <ul>
       <li><a class="btn-floating red"><i class="large mdi-editor-insert-chart"></i></a></li>
       <li><a class="btn-floating yellow darken-1"><i class="large mdi-editor-format-quote"></i></a></li>
-      <li><a class="btn-floating green"><i class="large mdi-editor-publish"></i></a></li>
-        <div align = "center" id="large mdi-editor-attach-file" onclick ="clickMe()">
-            <li><a class="btn-floating blue"><i class="large mdi-editor-attach-file"></i></a></li>
-                    <script>
-                        function clickMe() {
-                            $('#hovering').show();
-                        }
-                    </script>
-                    </div>
-    </ul>
-          </div>
-            
-            <div id = 'hovering'>
-                <div class="card blue-grey darken-1">
-                    <div class="card-content">
+      <li><a href="#modal2" class="btn-floating green modal-trigger"><i class="large mdi-editor-publish"></i></a></li>
+      <li><a href="#modal1" class="btn-floating blue modal-trigger"><i class="large mdi-editor-attach-file"></i></a></li>
 
-                        <span class="card-title grey-text text-darken-4">Tutorial<i onclick="exitButton()" class="mdi-navigation-close right"></i></span>
-                        <span class="blue-text"><br><p>Welcome to the StockTrader tutorial!<br><br>
-                            Step 1: At the top right-hand corner, there is a Log In Dropdown Menu<br>
-                            Step 2: Click the Dropdown Menu and click Log In<br>
-                            Step 3: The website will take you to a Login page.<br>
-                            Step 4: If you have not registered, please put in your credentials.<br>
-                            Step 5: After you have registered, the game will start. <br>
-                            Step 6: The goal of the game is to beat the opponent AI by making more than $500,000 <br>
-                            Step 7: There are 4 different stocks: Stock 1, Stock 2, Stock 3, and Stock 4. <br>
-                            Step 8: You can purchase any of these Stocks if you have enough money. <br>
-                            Step 9: Pay attention to the Stock Flunctations to ensure the Stock prices are not too high or too low. <br>
-                            Step 10: We hope you enjoy our StockTrader Simulation! <br>
-                            </p></span>
-                     <script>
-                        function exitButton() {
-                            $('#hovering').hide();
-                        }
-                    </script>
-
-                </div>
-            </div>
-</div>
- <!-- Modal Trigger -->
-  <a class="waves-effect waves-light btn modal-trigger" style="margin-bottom:100px" href="#modal1">Tutorial</a>
-
-  <!-- Modal Structure -->
+  <!-- Modal 1 Structure -->
   <div id="modal1" class="modal modal-fixed-footer" style="background-color: #eee; width:700px;left:50%;margin-left:-350px">
     <div class="modal-content">
       <h4 style="font-weight:300;font-size: 2.28rem;">Tutorial</h4>
@@ -633,6 +613,24 @@ Warren Buffett
       <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">Agree</a>
     </div>
   </div>
+
+        <!-- Modal 2 Structure -->
+          <div id="modal2" class="modal modal-fixed-footer" style="background-color: #eee; width:700px;left:50%;margin-left:-350px">
+    <div class="modal-content">
+      <h4 style="font-weight:300;font-size: 2.28rem;">Credits</h4>
+      <span style="color: rgba(0, 0, 0, 0.71);">
+          <br><p>CMPS 183 - Stock Trader Simulation<br><br>
+          Team Members:<br>
+          Jacky Chiu<br>
+          Loren Yeung<br>
+          Will Candy<br>
+          Anthony Dao<br>
+          </p></span>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">Agree</a>
+    </div>
+</div>
 
  <!-- Modal Structure -->
   <div id="modalAI" class="modal" style="background-color: #eee;">
