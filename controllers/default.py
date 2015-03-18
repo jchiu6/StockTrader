@@ -8,7 +8,7 @@
 ## - download is for downloading files uploaded in the db (does streaming)
 ## - api is an example of Hypermedia API support and access control
 #########################################################################
-
+from gluon.contrib.user_agent_parser import mobilize
 import datetime
 import logging
 import random
@@ -19,6 +19,7 @@ from socket import *
 import json
 import os
 
+@mobilize
 def index():
     player_money = 0
     stock1 = 0
@@ -229,17 +230,21 @@ def buy1():
     get price at current index, subtract from user total, store stock value in user file. increase current stock value by randint(0,5)
     if user total is neg, dont process anything
     '''
+    test2 = 0
+    test1 = request.post_vars.array
+    if test1 is not None:
+        test2 = test1
     prevdb1 = db(db.stocks.name == "1").select(orderby=~db.stocks.id).first()
     row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
     
     if int(row.money) > 0:
         prev1 = prevdb1.price
-        g1y = abs(int(prev1) + random.randint(0,5))
+        g1y = abs(int(prev1) + random.randint(0,5)*int(test2))
         db.stocks.insert(name = "1", price = g1y)
         #need check for if player has enough money
 
-        row.stock1_shares_owned = int(row.stock1_shares_owned) + 1
-        row.money = int(row.money) - int(prev1) #take away money
+        row.stock1_shares_owned = int(row.stock1_shares_owned) + int(test2)
+        row.money = int(row.money) - int(prev1)*int(test2) #take away money
         row.update_record(money = row.money, stock1_shares_owned = row.stock1_shares_owned)
     else:
         session.flash=T("You do not have enough money to buy Shares!")
@@ -251,21 +256,25 @@ def sell1():
     '''
     get price at current index, add to user total, remove stock value from user file, decrease current stock value by randint (0,5)
     '''
+    test2 = 0
+    test1 = request.post_vars.array
+    if test1 is not None:
+        test2 = test1
     prevdb1 = db(db.stocks.name == "1").select(orderby=~db.stocks.id).first()
     row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
     
-    if int(row.stock1_shares_owned) > 0:
+    if int(row.stock1_shares_owned) >= int(test2):
         prev1 = prevdb1.price
-        g1y = abs(int(prev1) - random.randint(0,5))
+        g1y = abs(int(prev1) - random.randint(0,5)*int(test2))
         db.stocks.insert(name = "1", price = g1y)
 
         #need check if user owns any shares in stock
 
-        row.stock1_shares_owned = int(row.stock1_shares_owned) - 1
-        row.money = int(row.money) + int(prev1) #take add money
+        row.stock1_shares_owned = int(row.stock1_shares_owned) - int(test2)
+        row.money = int(row.money) + int(prev1)*int(test2) #take add money
         row.update_record(money = row.money, stock1_shares_owned = row.stock1_shares_owned)
     else:
-        session.flash=T("You don't own any Shares of Stock 1!")
+        session.flash=T("You don't own enough Shares of Stock 1!")
     redirect(URL('default','index'))
     return dict()
 
@@ -276,17 +285,21 @@ def buy2():
     get price at current index, subtract from user total, store stock value in user file. increase current stock value by randint(0,5)
     if user total is neg, dont process anything
     '''
+    test2 = 0
+    test1 = request.post_vars.array
+    if test1 is not None:
+        test2 = test1
     prevdb2 = db(db.stocks.name == "2").select(orderby=~db.stocks.id).first()
     row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
     
     if int(row.money) > 0:
         prev2 = prevdb2.price
-        g2y = abs(int(prev2) + random.randint(0,12))
+        g2y = abs(int(prev2) + random.randint(0,12)*int(test2))
         db.stocks.insert(name = "2", price = g2y)
         #need check for if player has enough money
 
-        row.stock2_shares_owned = int(row.stock2_shares_owned) + 1
-        row.money = int(row.money) - int(prev2) #take away money
+        row.stock2_shares_owned = int(row.stock2_shares_owned) + int(test2)
+        row.money = int(row.money) - int(prev2)*int(test2) #take away money
         row.update_record(money = row.money, stock2_shares_owned = row.stock2_shares_owned)
     else:
         session.flash=T("You do not have enough money to buy Shares!")
@@ -298,21 +311,25 @@ def sell2():
     '''
     get price at current index, add to user total, remove stock value from user file, decrease current stock value by randint (0,5)
     '''
+    test2 = 0
+    test1 = request.post_vars.array
+    if test1 is not None:
+        test2 = test1
     prevdb2 = db(db.stocks.name == "2").select(orderby=~db.stocks.id).first()
     row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
     
-    if int(row.stock2_shares_owned) > 0:
+    if int(row.stock2_shares_owned) >= int(test2):
         prev2 = prevdb2.price
-        g2y = abs(int(prev2) - random.randint(0,12))
+        g2y = abs(int(prev2) - random.randint(0,12)*int(test2))
         db.stocks.insert(name = "2", price = g2y)
 
         #need check if user owns any shares in stock
 
-        row.stock2_shares_owned = int(row.stock2_shares_owned) - 1
-        row.money = int(row.money) + int(prev2) #take add money
+        row.stock2_shares_owned = int(row.stock2_shares_owned) - int(test2)
+        row.money = int(row.money) + int(prev2)*int(test2) #take add money
         row.update_record(money = row.money, stock2_shares_owned = row.stock2_shares_owned)
     else:
-        session.flash=T("You don't own any Shares of Stock 2!")
+        session.flash=T("You don't own enough Shares of Stock 2!")
     redirect(URL('default','index'))
     return dict()
 
@@ -323,17 +340,21 @@ def buy3():
     get price at current index, subtract from user total, store stock value in user file. increase current stock value by randint(0,5)
     if user total is neg, dont process anything
     '''
+    test2 = 0
+    test1 = request.post_vars.array
+    if test1 is not None:
+        test2 = test1
     prevdb3 = db(db.stocks.name == "3").select(orderby=~db.stocks.id).first()
     row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
     
     if int(row.money) > 0:
         prev3 = prevdb3.price
-        g3y = abs(int(prev3) + random.randint(0,25))
+        g3y = abs(int(prev3) + random.randint(0,25)*int(test2))
         db.stocks.insert(name = "3", price = g3y)
         #need check for if player has enough money
 
-        row.stock3_shares_owned = int(row.stock3_shares_owned) + 1
-        row.money = int(row.money) - int(prev3) #take away money
+        row.stock3_shares_owned = int(row.stock3_shares_owned) + int(test2)
+        row.money = int(row.money) - int(prev3)*int(test2) #take away money
         row.update_record(money = row.money, stock3_shares_owned = row.stock3_shares_owned)
     else:
         session.flash=T("You do not have enough money to buy Shares!")
@@ -345,21 +366,25 @@ def sell3():
     '''
     get price at current index, add to user total, remove stock value from user file, decrease current stock value by randint (0,5)
     '''
+    test2 = 0
+    test1 = request.post_vars.array
+    if test1 is not None:
+        test2 = test1
     prevdb3 = db(db.stocks.name == "3").select(orderby=~db.stocks.id).first()
     row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
     
-    if int(row.stock3_shares_owned) > 0:
+    if int(row.stock3_shares_owned) >= int(test2):
         prev3 = prevdb3.price
-        g3y = abs(int(prev3) - random.randint(0,25))
+        g3y = abs(int(prev3) - random.randint(0,25)*int(test2))
         db.stocks.insert(name = "3", price = g3y)
 
         #need check if user owns any shares in stock
 
-        row.stock3_shares_owned = int(row.stock3_shares_owned) - 1
-        row.money = int(row.money) + int(prev3) #take add money
+        row.stock3_shares_owned = int(row.stock3_shares_owned) - int(test2)
+        row.money = int(row.money) + int(prev3)*int(test2) #take add money
         row.update_record(money = row.money, stock3_shares_owned = row.stock3_shares_owned)
     else:
-        session.flash=T("You don't own any Shares of Stock 3!")
+        session.flash=T("You don't own enough Shares of Stock 3!")
     redirect(URL('default','index'))
     return dict()
 
@@ -370,17 +395,21 @@ def buy4():
     get price at current index, subtract from user total, store stock value in user file. increase current stock value by randint(0,5)
     if user total is neg, dont process anything
     '''
+    test2 = 0
+    test1 = request.post_vars.array
+    if test1 is not None:
+        test2 = test1
     prevdb4 = db(db.stocks.name == "4").select(orderby=~db.stocks.id).first()
     row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
     
     if int(row.money) > 0:
         prev4 = prevdb4.price
-        g4y = abs(int(prev4) + random.randint(0,50))
+        g4y = abs(int(prev4) + random.randint(0,50)*int(test2))
         db.stocks.insert(name = "4", price = g4y)
         #need check for if player has enough money
 
-        row.stock4_shares_owned = int(row.stock4_shares_owned) + 1
-        row.money = int(row.money) - int(prev4) #take away money
+        row.stock4_shares_owned = int(row.stock4_shares_owned) + int(test2)
+        row.money = int(row.money) - int(prev4)*int(test2) #take away money
         row.update_record(money = row.money, stock4_shares_owned = row.stock4_shares_owned)
     else:
         session.flash=T("You do not have enough money to buy Shares!")
@@ -392,21 +421,25 @@ def sell4():
     '''
     get price at current index, add to user total, remove stock value from user file, decrease current stock value by randint (0,5)
     '''
+    test2 = 0
+    test1 = request.post_vars.array
+    if test1 is not None:
+        test2 = test1
     prevdb4 = db(db.stocks.name == "4").select(orderby=~db.stocks.id).first()
     row = db(db.stocktrader.user_id == auth.user_id).select(orderby=~db.stocktrader.id).first()
     
-    if int(row.stock4_shares_owned) > 0:
+    if int(row.stock4_shares_owned) >= int(test2):
         prev4 = prevdb4.price
-        g4y = abs(int(prev4) - random.randint(0,50))
+        g4y = abs(int(prev4) - random.randint(0,50)*int(test2))
         db.stocks.insert(name = "4", price = g4y)
 
         #need check if user owns any shares in stock
 
-        row.stock4_shares_owned = int(row.stock4_shares_owned) - 1
-        row.money = int(row.money) + int(prev4) #take add money
+        row.stock4_shares_owned = int(row.stock4_shares_owned) - int(test2)
+        row.money = int(row.money) + int(prev4)*int(test2) #take add money
         row.update_record(money = row.money, stock4_shares_owned = row.stock4_shares_owned)
     else:
-        session.flash=T("You don't own any Shares of Stock 4!")
+        session.flash=T("You don't own enough Shares of Stock 4!")
     redirect(URL('default','index'))
     return dict()
 

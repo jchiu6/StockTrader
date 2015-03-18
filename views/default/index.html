@@ -314,14 +314,14 @@
             plot2.draw();
             plot3.draw();
             plot4.draw();
-            var inSeconds = updateInterval/1000;
-            function speedUp(){
-                updateInterval = updateInterval + 1000;
-            }
-            function slowDown(){
-                updateInterval = updateInterval - 1000;
-            }
-            document.querySelector('.speed').innerHTML =inSeconds+" seconds between each update";
+//             var inSeconds = updateInterval/1000;
+//             function speedUp(){
+//                 updateInterval = updateInterval + 1000;
+//             }
+//             function slowDown(){
+//                 updateInterval = updateInterval - 1000;
+//             }
+//             document.querySelector('.speed').innerHTML =inSeconds+" seconds between each update";
             myVar = setTimeout(update, updateInterval);
         }
         update();
@@ -346,15 +346,41 @@
        <div class="card-content" style = "margin-top:-45px">
            <span class="card-title activator grey-text text-darken-4">Stock 1 <i class="mdi-navigation-more-vert right"></i></span>
            <p>
-             <!-- <select id = "selectattribute">
+              <select id = "selectattribute1">
               <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
               <option value="5">5</option>
-              </select> -->
+              <option value="10">10</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              </select>
+           <div style="margin-bottom:20px;float:left;" onclick ="getValueBuy1()">
                 {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy1'))}}
-                {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell1'))}}
+           </div>
+                <div style="float:left" onclick ="getValueSell1()">
+                    {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell1'))}}
+           </div>
+               <script>
+                   function getValueBuy1(){
+                   var column1 = document.getElementById("selectattribute1");
+                    var valueC1 = column1.options[column1.selectedIndex].value;
+                            console.log("vc1",valueC1);
+                             $.ajax({
+                          type: "POST",
+                          url: "/StockTrader/default/buy1",
+                          data: "array="+valueC1
+                       }).done(function( msg ) {console.log("pushedvc1",valueC1); });
+                   }
+                    function getValueSell1(){
+            var column1 = document.getElementById("selectattribute1");
+            var valueC1 = column1.options[column1.selectedIndex].value;
+            console.log("vc1",valueC1);
+             $.ajax({
+          type: "POST",
+          url: "/StockTrader/default/sell1",
+          data: "array="+valueC1
+       }).done(function( msg ) {console.log("pushedvc1",valueC1); });
+                   }
+               </script>
              <!--   <a class="waves-effect waves-light" href="StockTrader/default/sell1">Sell</a> -->
            </p>
        </div>
@@ -374,17 +400,43 @@
         </div>
         <div class="card-content" style = "margin-top:-45px">
             <span class="card-title activator grey-text text-darken-4">Stock 2<i class="mdi-navigation-more-vert right"></i></span>
-            <p>
-              <!--<select>
+           <p>
+              <select id = "selectattribute2">
               <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
               <option value="5">5</option>
-              </select> -->
+              <option value="10">10</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              </select><div style="margin-bottom:20px;float:left;" onclick ="getValueBuy2()">
                 {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy2'))}}
-                {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell2'))}}
-            </p>
+           </div>
+                <div style="float:left" onclick ="getValueSell2()">
+                    {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell2'))}}
+           </div>
+               <script>
+                   function getValueBuy2(){
+            var column2 = document.getElementById("selectattribute2");
+            var valueC1 = column2.options[column2.selectedIndex].value;
+            console.log("vc2",valueC1);
+             $.ajax({
+          type: "POST",
+          url: "/StockTrader/default/buy2",
+          data: "array="+valueC1
+       }).done(function( msg ) {console.log("pushedvc1",valueC1); });
+                   }
+                                      function getValueSell2(){
+            var column2 = document.getElementById("selectattribute2");
+            var valueC1 = column2.options[column2.selectedIndex].value;
+            console.log("vc2",valueC1);
+             $.ajax({
+          type: "POST",
+          url: "/StockTrader/default/sell2",
+          data: "array="+valueC1
+       }).done(function( msg ) {console.log("pushedvc2",valueC1); });
+                   }
+               </script>
+             <!--   <a class="waves-effect waves-light" href="StockTrader/default/sell1">Sell</a> -->
+           </p>
         </div>
         <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">Stock 2<i class="mdi-navigation-close right"></i></span>
@@ -404,18 +456,42 @@
         <div class="card-content" style = "margin-top:-45px">
             <span class="card-title activator grey-text text-darken-4">Stock 3 <i class="mdi-navigation-more-vert right"></i></span>
             <p>
-              <!--<select>
+              <select id = "selectattribute3">
               <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
               <option value="5">5</option>
-              </select> -->
-                    {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy3'))}}
+              <option value="10">10</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              </select><div style="margin-bottom:20px;float:left;" onclick ="getValueBuy3()">
+                {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy3'))}}
+           </div>
+                <div style="float:left" onclick ="getValueSell3()">
                     {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell3'))}}
-<!--                 <a class="waves-effect waves-light" href="StockTrader/default/buy3">Buy</a>
-                <a class="waves-effect waves-light" href="StockTrader/default/sell3">Sell</a> -->
-            </p>
+           </div>
+               <script>
+                   function getValueBuy3(){
+            var column2 = document.getElementById("selectattribute3");
+            var valueC1 = column2.options[column2.selectedIndex].value;
+            console.log("vc2",valueC1);
+             $.ajax({
+          type: "POST",
+          url: "/StockTrader/default/buy3",
+          data: "array="+valueC1
+       }).done(function( msg ) {console.log("pushedvc1",valueC1); });
+                   }
+                                      function getValueSell3(){
+            var column2 = document.getElementById("selectattribute3");
+            var valueC1 = column2.options[column2.selectedIndex].value;
+            console.log("vc2",valueC1);
+             $.ajax({
+          type: "POST",
+          url: "/StockTrader/default/sell3",
+          data: "array="+valueC1
+       }).done(function( msg ) {console.log("pushedvc2",valueC1); });
+                   }
+               </script>
+             <!--   <a class="waves-effect waves-light" href="StockTrader/default/sell1">Sell</a> -->
+           </p>
         </div>
         <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">Stock 3<i class="mdi-navigation-close right"></i></span>
@@ -433,19 +509,43 @@
         </div>
         <div class="card-content" style = "margin-top:-45px">
             <span class="card-title activator grey-text text-darken-4">Stock 4 <i class="mdi-navigation-more-vert right"></i></span>
-            <p>
-              <!--<select style ="none;">
+<p>
+              <select id = "selectattribute4">
               <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
               <option value="5">5</option>
-              </select> -->
-                    {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy4'))}}
+              <option value="10">10</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              </select><div style="margin-bottom:20px;float:left;" onclick ="getValueBuy4()">
+                {{=A('Buy', _class='btn-flat', _href=URL('default', 'buy4'))}}
+           </div>
+                <div style="float:left" onclick ="getValueSell4()">
                     {{=A('Sell', _class='btn-flat', _href=URL('default', 'sell4'))}}
-<!--                 <a class="waves-effect waves-light" href="StockTrader/default/buy4">Buy</a>
-                <a class="waves-effect waves-light" href="StockTrader/default/sell4">Sell</a> -->
-            </p>
+           </div>
+               <script>
+                   function getValueBuy4(){
+            var column2 = document.getElementById("selectattribute4");
+            var valueC1 = column2.options[column2.selectedIndex].value;
+            console.log("vc2",valueC1);
+             $.ajax({
+          type: "POST",
+          url: "/StockTrader/default/buy4",
+          data: "array="+valueC1
+       }).done(function( msg ) {console.log("pushedvc1",valueC1); });
+                   }
+                                      function getValueSell4(){
+            var column2 = document.getElementById("selectattribute4");
+            var valueC1 = column2.options[column2.selectedIndex].value;
+            console.log("vc2",valueC1);
+             $.ajax({
+          type: "POST",
+          url: "/StockTrader/default/sell4",
+          data: "array="+valueC1
+       }).done(function( msg ) {console.log("pushedvc2",valueC1); });
+                   }
+               </script>
+             <!--   <a class="waves-effect waves-light" href="StockTrader/default/sell1">Sell</a> -->
+           </p>
         </div>
         <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">Stock 4<i class="mdi-navigation-close right"></i></span>
@@ -528,9 +628,6 @@
         <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">Stock Fluctuations<i class="mdi-navigation-close right"></i></span>
             <span class="blue-text"><br><p>This card displays the stock price changes between each update interval. The stock prices and graphs update every 5 seconds, though there is a slight delay due to AJAX.</p>
-            <a class="waves-effect waves-light" onClick="speedUp()">Speed Up</a>
-            <a class="waves-effect waves-light" onClick="slowDown()">Slow Down</a>
-                <div class = "speed"></div>
 
         </div>
     </div>
@@ -624,7 +721,11 @@ Warren Buffett
           Jacky Chiu<br>
           Loren Yeung<br>
           Will Candy<br>
-          Anthony Dao<br>
+          Anthony Dao<br><br>
+          Resources:<br>
+          <a href="http://materializecss.com/">Materialize CSS</a>, for their beautiful CSS and JS, with design elements from Google's <a href="http://www.google.com/design/spec/material-design/introduction.html">Material Design</a><br>
+          <a href="http://www.flotcharts.org/">Flot Charts</a>, for inspiration on <a href="http://www.jqueryflottutorial.com/how-to-make-jquery-flot-realtime-update-chart.html">real-time</a> graphing in Javascript<br>
+          <a href="https://www.pythonanywhere.com/">Python Anywhere</a>, for hosting our site<br>
           </p></span>
     </div>
     <div class="modal-footer">
